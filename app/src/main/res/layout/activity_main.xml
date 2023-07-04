@@ -20,6 +20,7 @@
             app:layout_constraintTop_toTopOf="@id/gl_h_start"
             app:singleSelection="true"
             app:selectionRequired="true">
+
             <Button
                 style="@style/Widget.App.Button.OutlinedButton"
                 android:id="@+id/button1"
@@ -34,6 +35,7 @@
                 app:rippleColor="@color/purple_50"
                 app:strokeColor="@color/gray"
                 app:backgroundTint="@color/segment_button_color"/>
+
             <Button
                 style="@style/Widget.App.Button.OutlinedButton"
                 android:id="@+id/button2"
@@ -48,6 +50,7 @@
                 app:rippleColor="@color/purple_50"
                 app:strokeColor="@color/gray"
                 app:backgroundTint="@color/segment_button_color"/>
+
             <Button
                 style="@style/Widget.App.Button.OutlinedButton"
                 android:id="@+id/button3"
@@ -62,6 +65,7 @@
                 app:rippleColor="@color/purple_50"
                 app:strokeColor="@color/gray"
                 app:backgroundTint="@color/segment_button_color"/>
+
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView
@@ -263,18 +267,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/app_padding" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/app_padding"/>
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/app_padding"/>
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h_end"
             android:layout_width="wrap_content"
