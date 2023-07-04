@@ -9,7 +9,6 @@ Android 학습 프로젝트 #1
 3. ConstraintLayout으로 각 카드를 만들고 backgound에 해당하는 xml을 만들어 배치
 4. 글자 투명도는 검색을 통해 color.xml에 투명도+색 코드를 추가
 
-
 ## 럭키카드 클래스 만들기
 
 1. 카드 종류는 enum class로 구현, 각 enum에 해당 유니코드 속성으로 입력
