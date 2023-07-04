@@ -3,6 +3,7 @@ package io.softeer.luckycardgame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
 import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,12 +16,17 @@ import io.softeer.luckycardgame.card.CardType
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.ViewUtil
+=======
+import io.softeer.luckycardgame.card.Card
+import io.softeer.luckycardgame.card.CardType
+>>>>>>> 1d4da05 (Feat : 럭키카드 클래스 구현)
 
 class MainActivity : AppCompatActivity() {
 
     /**
      * 카드를 담을 리스트
      */
+<<<<<<< HEAD
     private var cardList = mutableListOf<Card>()
     private lateinit var bind : ActivityMainBinding
     private lateinit var recyclerViewList : List<RecyclerView>
@@ -183,4 +189,42 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+=======
+    private val cardList = mutableListOf<Card>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        makeCard()
+
+    }
+
+    /**
+     * 카드 만들기
+     * 1. 카드 생성
+     * 2. 카드 섞기
+     * 3. 카드 정보 출력
+     */
+    private fun makeCard() {
+        for(type in CardType.values()) {
+            for (number in Card.MIN_NUMBER..Card.MAX_NUMBER){
+                cardList.add(Card(number, type))
+            }
+        }
+        cardList.shuffle()
+        Log.i(javaClass.name, concatAllCardInfo(cardList))
+    }
+
+    /**
+     * 카드 정보 합치기
+     */
+    private fun concatAllCardInfo(cardList : MutableList<Card>) : String {
+        val infoList = mutableListOf<String>()
+        cardList.forEach {
+            infoList.add(it.cardInfo())
+        }
+        return infoList.joinToString(", ")
+    }
+
+>>>>>>> 1d4da05 (Feat : 럭키카드 클래스 구현)
 }
