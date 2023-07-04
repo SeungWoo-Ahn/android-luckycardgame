@@ -17,7 +17,7 @@ class Card(
 
     // 해당 카드의 최대/최소 숫자를 설정하면 나중에 유지보수에 편리했다.
     companion object {
+        const val MAX_NUMBER = 12
         const val MIN_NUMBER = 1
     }
-
 }
