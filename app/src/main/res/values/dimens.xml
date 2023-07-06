@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_padding">15dp</dimen>
+    <dimen name="card_padding">25dp</dimen>
+    <dimen name="card_radius">10dp</dimen>
+    <dimen name="card_height">100dp</dimen>
+    <dimen name="big_card_height">120dp</dimen>
+    <dimen name="card_space">20dp</dimen>
+    <dimen name="card_text_size">30sp</dimen>
+</resources>
