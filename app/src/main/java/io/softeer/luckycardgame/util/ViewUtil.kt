@@ -2,7 +2,9 @@ package io.softeer.luckycardgame.util
 
 import android.util.TypedValue
 import android.view.View
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import io.softeer.luckycardgame.adapter.CardAdapter
@@ -27,21 +29,24 @@ object ViewUtil {
     /**
      * 보드 뷰 변경
      */
-    fun changeBoardView(dBoard : ConstraintLayout, eBoard : ConstraintLayout, bottomBoard : ConstraintLayout, playerNumber : Int, play : (Int)->Unit) {
+    fun changeBoardView(dGroup : Group, eGroup : Group, bottomBoard : TextView, bottomRecyclerView: RecyclerView, playerNumber : Int, play : (Int)->Unit) {
         when(playerNumber) {
             3 -> {
-                dBoard.visibility = View.GONE
-                eBoard.visibility = View.GONE
+                dGroup.visibility = View.GONE
+                eGroup.visibility = View.GONE
+                bottomRecyclerView.setHeight(240f)
                 bottomBoard.setHeight(240f)
             }
             4 -> {
-                dBoard.visibility = View.VISIBLE
-                eBoard.visibility = View.GONE
+                dGroup.visibility = View.VISIBLE
+                eGroup.visibility = View.GONE
+                bottomRecyclerView.setHeight(240f)
                 bottomBoard.setHeight(240f)
             }
             5 -> {
-                dBoard.visibility = View.VISIBLE
-                eBoard.visibility = View.VISIBLE
+                dGroup.visibility = View.VISIBLE
+                eGroup.visibility = View.VISIBLE
+                bottomRecyclerView.setHeight(120f)
                 bottomBoard.setHeight(120f)
             }
         }

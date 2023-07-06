@@ -45,25 +45,28 @@ class MainActivity : AppCompatActivity() {
 
             when(button.checkedButtonId) {
                 R.id.button1 -> ViewUtil.changeBoardView(
-                    bind.clGrayD,
-                    bind.clGrayE,
-                    bind.clBoard,
+                    bind.groupBoardD,
+                    bind.groupBoardE,
+                    bind.tvBoardBottom,
+                    bind.rvBottom,
                     3,
                     ::playCardGame
                 )
 
                 R.id.button2 -> ViewUtil.changeBoardView(
-                    bind.clGrayD,
-                    bind.clGrayE,
-                    bind.clBoard,
+                    bind.groupBoardD,
+                    bind.groupBoardE,
+                    bind.tvBoardBottom,
+                    bind.rvBottom,
                     4,
                     ::playCardGame
                 )
 
                 R.id.button3 -> ViewUtil.changeBoardView(
-                    bind.clGrayD,
-                    bind.clGrayE,
-                    bind.clBoard,
+                    bind.groupBoardD,
+                    bind.groupBoardE,
+                    bind.tvBoardBottom,
+                    bind.rvBottom,
                     5,
                     ::playCardGame
                 )
@@ -157,21 +160,21 @@ class MainActivity : AppCompatActivity() {
 
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
-                    bind.rvBoard,
+                    bind.rvBottom,
                     layoutManager = GridLayoutManager(this,2,RecyclerView.HORIZONTAL,false),
                     rightSpace = 40,
                     topSpace = 20,
                     adapter =  CardAdapter(cardList, false)
                 )
             4 -> ViewUtil.setRecycler(
-                    bind.rvBoard,
+                    bind.rvBottom,
                     layoutManager = GridLayoutManager(this,2,RecyclerView.HORIZONTAL,false),
                     rightSpace = 100,
                     topSpace = 20,
                     adapter =  CardAdapter(cardList, false)
                 )
             5 -> ViewUtil.setRecycler(
-                    bind.rvBoard,
+                    bind.rvBottom,
                     layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false),
                     rightSpace = 0,
                     topSpace = 0,

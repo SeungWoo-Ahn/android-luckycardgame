@@ -32,6 +32,10 @@ class CardAdapter(private val cardList: MutableList<Card>,private val isMine : B
         }
     }
 
+    /**
+     * isMine 속성이 true 일 때, 카드 정보가 보인다
+     * false 라면, 카드 뒷면이 보인다
+     */
     private fun selectCardSide(textView : TextView, text : String, isMine: Boolean) {
         textView.let {
             it.text = text
