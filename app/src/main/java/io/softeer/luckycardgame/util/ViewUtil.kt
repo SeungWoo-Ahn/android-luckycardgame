@@ -67,10 +67,11 @@ object ViewUtil {
     /**
      * 뷰 높이 설정
      */
-    private fun View.setHeight(value: Float) {
-        layoutParams?.let {
-            it.height =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics).toInt()
-            layoutParams = it
+    fun View.setHeight(value: Float) {
+        val lp = layoutParams
+        lp?.let {
+            lp.height =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics).toInt()
+            layoutParams = lp
         }
     }
 
