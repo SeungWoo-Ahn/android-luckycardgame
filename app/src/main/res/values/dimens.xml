@@ -3,6 +3,7 @@
     <dimen name="app_padding">15dp</dimen>
     <dimen name="card_padding_horizontal">10dp</dimen>
     <dimen name="card_padding_vertical">5dp</dimen>
+    <dimen name="big_card_padding_vertical">12dp</dimen>
     <dimen name="card_radius">10dp</dimen>
     <dimen name="card_height">100dp</dimen>
     <dimen name="big_card_height">120dp</dimen>

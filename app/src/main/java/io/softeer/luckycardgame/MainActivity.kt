@@ -14,6 +14,7 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.card.CardType
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
+import io.softeer.luckycardgame.util.ViewUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
+        setUI()
+    }
+
+    private fun setUI() {
         recyclerViewList = listOf(bind.rvA , bind.rvB, bind.rvC, bind.rvD, bind.rvE)
         manageButton()
     }
@@ -42,24 +47,29 @@ class MainActivity : AppCompatActivity() {
         bind.toggleButton.addOnButtonCheckedListener { button, checkId, isChecked ->
 
             when(button.checkedButtonId) {
-                R.id.button1 -> {
-                    bind.clBoard.setHeight(240f)
-                    bind.clGrayD.visibility = View.GONE
-                    bind.clGrayE.visibility = View.GONE
-                    playCardGame(3)
-                }
-                R.id.button2 -> {
-                    bind.clBoard.setHeight(240f)
-                    bind.clGrayD.visibility = View.VISIBLE
-                    bind.clGrayE.visibility = View.GONE
-                    playCardGame(4)
-                }
-                R.id.button3 -> {
-                    bind.clBoard.setHeight(120f)
-                    bind.clGrayD.visibility = View.VISIBLE
-                    bind.clGrayE.visibility = View.VISIBLE
-                    playCardGame(5)
-                }
+                R.id.button1 -> ViewUtil.changeBoardView(
+                    bind.clGrayD,
+                    bind.clGrayE,
+                    bind.clBoard,
+                    3,
+                    ::playCardGame
+                )
+
+                R.id.button2 -> ViewUtil.changeBoardView(
+                    bind.clGrayD,
+                    bind.clGrayE,
+                    bind.clBoard,
+                    4,
+                    ::playCardGame
+                )
+
+                R.id.button3 -> ViewUtil.changeBoardView(
+                    bind.clGrayD,
+                    bind.clGrayE,
+                    bind.clBoard,
+                    5,
+                    ::playCardGame
+                )
             }
 
         }
@@ -68,6 +78,10 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * 게임 시작하기
+     * 1. 카드 만들기 ~ 섞기
+     * 2. 플레이어 초기화
+     * 3. 플레이어 카드 배분
+     * 4. 하단 보드 카드 배분
      */
     private fun playCardGame(playerNumber: Int) {
         makeCard(playerNumber)
@@ -115,12 +129,12 @@ class MainActivity : AppCompatActivity() {
      * 플레이어 만들기
      */
     private fun makePlayer(playerNumber: Int, cardCount : Int) {
-        for (num in 1..playerNumber) {
-            val player = if (num == 1) Player(cardList.subList(0,cardCount),true) else Player(cardList.subList((num-1)*cardCount,num*cardCount),false)
-            playerList.add(player)
-        }
-        makeBoard(cardList.subList(playerNumber*cardCount,cardList.size), playerNumber)
+        for (num in 1..playerNumber)
+            playerList.add(Player(cardList.subList((num-1)*cardCount,num*cardCount),false))
+        playerList[0].changeToMyCard()
         matchAdapter()
+        makeBoard(cardList.subList(playerNumber*cardCount,cardList.size), playerNumber)
+
     }
 
     /**
@@ -128,18 +142,14 @@ class MainActivity : AppCompatActivity() {
      */
     private fun matchAdapter() {
 
-        val playerCount = playerList.size
-        var itemSpace = 0
-        if (playerCount == 3) itemSpace = -42
-        if (playerCount == 4) itemSpace = -24
-
-        for (index in 0 until playerCount) {
-            recyclerViewList[index].let {
-                if (it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
-                it.addItemDecoration(RecyclerItemDecoration(itemSpace,0))
-                it.adapter = playerList[index].adapterByPlayer()
-            }
-            recyclerViewList[index].adapter = playerList[index].adapterByPlayer()
+        for (index in 0 until playerList.size) {
+            ViewUtil.setRecycler(
+                recyclerViewList[index],
+                layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false),
+                rightSpace = ViewUtil.setItemSpace(playerList.size),
+                topSpace = 0,
+                adapter =  playerList[index].adapterByPlayer()
+            )
         }
     }
 
@@ -149,36 +159,28 @@ class MainActivity : AppCompatActivity() {
     private fun makeBoard(cardList: MutableList<Card>, playerNumber: Int) {
 
         when(playerNumber) {
-            3 -> {
-                bind.rvBoard.let {
-                    it.layoutManager = GridLayoutManager(this,2, RecyclerView.HORIZONTAL,false)
-                    if(it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
-                    it.addItemDecoration(RecyclerItemDecoration(40,20))
-                }
+            3 -> ViewUtil.setRecycler(
+                    bind.rvBoard,
+                    layoutManager = GridLayoutManager(this,2,RecyclerView.HORIZONTAL,false),
+                    rightSpace = 40,
+                    topSpace = 20,
+                    adapter =  CardAdapter(cardList, false)
+                )
+            4 -> ViewUtil.setRecycler(
+                    bind.rvBoard,
+                    layoutManager = GridLayoutManager(this,2,RecyclerView.HORIZONTAL,false),
+                    rightSpace = 100,
+                    topSpace = 20,
+                    adapter =  CardAdapter(cardList, false)
+                )
+            5 -> ViewUtil.setRecycler(
+                    bind.rvBoard,
+                    layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false),
+                    rightSpace = 0,
+                    topSpace = 0,
+                    adapter =  CardAdapter(cardList, false)
+                )
             }
-            4 -> {
-                bind.rvBoard.let {
-                    it.layoutManager = GridLayoutManager(this,2, RecyclerView.HORIZONTAL,false)
-                    if(it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
-                    it.addItemDecoration(RecyclerItemDecoration(100,20))
-                }
-            }
-            5 -> {
-                bind.rvBoard.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false)
-            }
-        }
-        bind.rvBoard.adapter = CardAdapter(cardList, false)
-    }
-
-    /**
-     * 뷰 크기를 설정
-     */
-    private fun View.setHeight(value: Float) {
-        val lp = layoutParams
-        lp?.let {
-            lp.height =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,resources.displayMetrics).toInt()
-            layoutParams = lp
-        }
     }
 
 }
