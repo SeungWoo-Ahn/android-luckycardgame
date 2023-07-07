@@ -12,6 +12,8 @@ import io.softeer.luckycardgame.card.CardType
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.ViewUtil
+import io.softeer.luckycardgame.card.Card
+import io.softeer.luckycardgame.card.CardType
 
 class MainActivity : AppCompatActivity() {
 

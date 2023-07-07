@@ -8,6 +8,9 @@ import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import io.softeer.luckycardgame.adapter.CardAdapter
+import androidx.constraintlayout.widget.Group
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import io.softeer.luckycardgame.adapter.RecyclerItemDecoration
 
 object ViewUtil {

@@ -21,6 +21,7 @@ Android 학습 프로젝트 #1
    4) 배열 순회하며 카드 정보 출력
 
 
+
 ## 카드 나눠주기
 
 1. 상단 뷰를 segmentButton으로 변경 : Material3의 ToggleButtonGroup의 style을 커스텀하여 사용했다
