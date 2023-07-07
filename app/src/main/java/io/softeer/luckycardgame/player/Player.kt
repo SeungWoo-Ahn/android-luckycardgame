@@ -4,12 +4,13 @@ import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 
 class Player constructor(
-    private val cardList: MutableList<Card>,
-    private var isMine : Boolean
+    deck: MutableList<Card>,
+    playerIndex : Int,
+    cardCount : Int
 ) {
-    fun changeToMyCard() {
-        isMine = true
-    }
+    private var isMine = playerIndex == 0
+    private val cardList = deck.subList(playerIndex*cardCount, (playerIndex+1)*cardCount)
+
     fun adapterByPlayer() : CardAdapter = CardAdapter(cardList, isMine)
 
 }

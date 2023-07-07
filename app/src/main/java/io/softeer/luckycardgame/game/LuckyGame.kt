@@ -71,17 +71,8 @@ class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGr
      * 게임 시작하기
      */
     private fun play(playerNumber : Int) {
-        initGame()
         makeCards(playerNumber)
         makePlayer(playerNumber, 11-playerNumber)
-    }
-
-    /**
-     * 게임 초기화
-     */
-    private fun initGame() {
-        cardList = mutableListOf()
-        playerList = mutableListOf()
     }
 
     /**
@@ -113,9 +104,9 @@ class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGr
      * 플레이어 참가
      */
     private fun makePlayer(playerNumber: Int, cardCount : Int) {
-        for (num in 1..playerNumber)
-            playerList.add(Player(cardList.subList((num-1)*cardCount,num*cardCount),false))
-        playerList[0].changeToMyCard()
+        playerList = mutableListOf()
+        for (number in 0 until playerNumber)
+            playerList.add(Player(cardList, number, cardCount))
         matchAdapter()
         putRemainCards(cardList.subList(playerNumber*cardCount,cardList.size), playerNumber)
     }
