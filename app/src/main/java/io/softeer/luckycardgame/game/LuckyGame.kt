@@ -12,6 +12,7 @@ import io.softeer.luckycardgame.card.CardType
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager
+import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
 import io.softeer.luckycardgame.util.ViewUtil
 
 class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGroup.OnButtonCheckedListener {
@@ -72,16 +73,9 @@ class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGr
      * 게임 시작하기
      */
     private fun play(playerNumber : Int) {
-        getDeck(playerNumber)
+        deck = mutableListOf()
+        deck.provideDeckForGame(playerNumber = playerNumber)
         makePlayer(playerNumber, 11-playerNumber)
-    }
-
-    /**
-     * 카드 가져오기
-     */
-    private fun getDeck(playerNumber: Int)  {
-        deck = CardManager.getDeck(playerNumber)
-        Log.i(javaClass.name, CardManager.showAllCardInfo())
     }
 
 

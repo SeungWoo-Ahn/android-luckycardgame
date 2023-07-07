@@ -1,5 +1,6 @@
 package io.softeer.luckycardgame.util
 
+import android.util.Log
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.card.CardType
 
@@ -15,6 +16,15 @@ object CardManager {
     }
 
     /**
+     * 게임을 위한 덱 제공
+     */
+    fun MutableList<Card>.provideDeckForGame(playerNumber : Int) {
+        addAll(deck.shuffled())
+        if (playerNumber == 3) exceptCard(this, cardNumber = 12)
+        Log.i("GAME DECK", showAllCardInfo(this))
+    }
+
+    /**
      * 카드 만들기
      */
     private fun makeDeck() {
@@ -26,32 +36,19 @@ object CardManager {
     }
 
     /**
-     * 카드 섞기
-     */
-    private fun shuffleDeck() = deck.shuffle()
-
-    /**
      * 덱에서 특정 숫자 제거하기
      */
-    private fun exceptCard(cardNumber : Int) = deck.removeIf { it.getCardNumber() == cardNumber }
-
-    /**
-     * 카드 가져가기
-     */
-    fun getDeck(playerNumber : Int) : MutableList<Card> {
-        if (playerNumber==3) exceptCard(cardNumber = 12)
-        shuffleDeck()
-        return deck
-    }
+    private fun exceptCard(deck : MutableList<Card>,cardNumber : Int): Boolean = deck.removeIf { it.getCardNumber() == cardNumber }
 
     /**
      * 모든 카드 정보 보기
      */
-    fun showAllCardInfo() : String {
+    private fun showAllCardInfo(deck: MutableList<Card>) : String {
         val infoList = mutableListOf<String>()
         deck.forEach {
             infoList.add(it.cardInfo())
         }
         return infoList.joinToString(", ")
     }
+
 }
