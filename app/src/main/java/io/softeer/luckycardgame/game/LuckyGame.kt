@@ -11,6 +11,7 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.card.CardType
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
+import io.softeer.luckycardgame.util.CardManager
 import io.softeer.luckycardgame.util.ViewUtil
 
 class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGroup.OnButtonCheckedListener {
@@ -62,7 +63,7 @@ class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGr
      *** 게임
      *************************************************/
 
-    private var cardList = mutableListOf<Card>()
+    private var deck = mutableListOf<Card>()
     private var playerList = mutableListOf<Player>()
     private val recyclerViewList : List<RecyclerView> =
         listOf(bind.rvA, bind.rvB, bind.rvC, bind.rvD, bind.rvE)
@@ -71,34 +72,18 @@ class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGr
      * 게임 시작하기
      */
     private fun play(playerNumber : Int) {
-        makeCards(playerNumber)
+        getDeck(playerNumber)
         makePlayer(playerNumber, 11-playerNumber)
     }
 
     /**
-     * 카드 만들기
+     * 카드 가져오기
      */
-    private fun makeCards(playerNumber: Int)  {
-        val cardMaxNumber = if (playerNumber==3) 11 else 12
-        for (type in CardType.values()) {
-            for (number in Card.MIN_NUMBER..cardMaxNumber) {
-                cardList.add(Card(number, type))
-            }
-        }
-        cardList.shuffle()
-        Log.i(javaClass.name, concatAllCardInfo(cardList))
+    private fun getDeck(playerNumber: Int)  {
+        deck = CardManager.getDeck(playerNumber)
+        Log.i(javaClass.name, CardManager.showAllCardInfo())
     }
 
-    /**
-     * 카드 정보 합치기
-     */
-    private fun concatAllCardInfo(cardList : MutableList<Card>) : String {
-        val infoList = mutableListOf<String>()
-        cardList.forEach {
-            infoList.add(it.cardInfo())
-        }
-        return infoList.joinToString(", ")
-    }
 
     /**
      * 플레이어 참가
@@ -106,9 +91,9 @@ class LuckyGame(private val bind : ActivityMainBinding) : MaterialButtonToggleGr
     private fun makePlayer(playerNumber: Int, cardCount : Int) {
         playerList = mutableListOf()
         for (number in 0 until playerNumber)
-            playerList.add(Player(cardList, number, cardCount))
+            playerList.add(Player(deck, number, cardCount))
         matchAdapter()
-        putRemainCards(cardList.subList(playerNumber*cardCount,cardList.size), playerNumber)
+        putRemainCards(deck.subList(playerNumber*cardCount,deck.size), playerNumber)
     }
 
     /**

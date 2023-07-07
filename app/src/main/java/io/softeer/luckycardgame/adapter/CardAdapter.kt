@@ -25,8 +25,8 @@ class CardAdapter(private val cardList: MutableList<Card>,private val isMine : B
 
     inner class ViewHolder(private val bind : HolderCardBinding) : RecyclerView.ViewHolder(bind.root) {
         fun bind(card : Card) {
-            selectCardSide(bind.cardNumberTop, card.getCardNumber(), isMine)
-            selectCardSide(bind.cardNumberBottom, card.getCardNumber(), isMine)
+            selectCardSide(bind.cardNumberTop, card.getCardNumber().toString(), isMine)
+            selectCardSide(bind.cardNumberBottom, card.getCardNumber().toString(), isMine)
             selectCardSide(bind.cardType, card.getCardType(), isMine)
             bind.cardBack.visibility = if(!isMine) View.VISIBLE else View.INVISIBLE
         }
