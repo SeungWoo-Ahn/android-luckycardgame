@@ -1,7 +1,7 @@
 package io.softeer.luckycardgame.card
 
 // 캡슐화를 위해 모든 필드를 private 처리했다.
-class Card constructor(
+class Card(
     private val number : Int,
     private val type: CardType,
 ) {

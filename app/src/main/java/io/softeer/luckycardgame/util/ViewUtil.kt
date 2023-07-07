@@ -15,21 +15,32 @@ object ViewUtil {
     /**
      * 리사이클러뷰 설정
      */
-    fun setRecycler(recyclerView: RecyclerView,layoutManager: LayoutManager, rightSpace : Int, topSpace : Int, adapter: CardAdapter) {
-
+    fun setRecycler(
+        recyclerView: RecyclerView,
+        layoutManager: LayoutManager,
+        rightSpace: Int,
+        topSpace: Int,
+        adapter: CardAdapter
+    ) {
         recyclerView.let {
             it.layoutManager = layoutManager
             if (it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
             it.addItemDecoration(RecyclerItemDecoration(rightSpace,topSpace))
             it.adapter = adapter
         }
-
     }
 
     /**
      * 보드 뷰 변경
      */
-    fun changeBoardView(dGroup : Group, eGroup : Group, bottomBoard : TextView, bottomRecyclerView: RecyclerView, playerNumber : Int, play : (Int)->Unit) {
+    fun changeBoardView(
+        dGroup: Group,
+        eGroup: Group,
+        bottomBoard: TextView,
+        bottomRecyclerView: RecyclerView,
+        playerNumber: Int,
+        play: (Int) -> Unit
+    ) {
         when(playerNumber) {
             3 -> {
                 dGroup.visibility = View.GONE
@@ -57,10 +68,9 @@ object ViewUtil {
      * 뷰 높이 설정
      */
     private fun View.setHeight(value: Float) {
-        val lp = layoutParams
-        lp?.let {
-            lp.height =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics).toInt()
-            layoutParams = lp
+        layoutParams?.let {
+            it.height =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics).toInt()
+            layoutParams = it
         }
     }
 
