@@ -1,6 +1,11 @@
 package io.softeer.luckycardgame.util
 
+import android.content.Context
 import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.card.CardType
 
@@ -22,6 +27,44 @@ object CardManager {
         addAll(deck.shuffled())
         if (playerNumber == 3) exceptCard(this, cardNumber = 12)
         Log.i("GAME DECK", showAllCardInfo(this))
+    }
+
+    /**
+     * 남은 카드 하단 보드에 두기
+     */
+    fun putRemainCards(
+        deck: MutableList<Card>,
+        playerNumber: Int,
+        bottomRecyclerView: RecyclerView,
+        context: Context
+    ) {
+        val remainCardList = deck.subList(playerNumber*(11-playerNumber), deck.size)
+        when(playerNumber) {
+            3 -> ViewUtil.setRecycler(
+                bottomRecyclerView,
+                layoutManager = GridLayoutManager(context,2,RecyclerView.HORIZONTAL,false),
+                rightSpace = 40,
+                topSpace = 20,
+                adapter =  CardAdapter(remainCardList, false)
+            )
+
+            4 -> ViewUtil.setRecycler(
+                bottomRecyclerView,
+                layoutManager = GridLayoutManager(context,2,RecyclerView.HORIZONTAL,false),
+                rightSpace = 100,
+                topSpace = 20,
+                adapter =  CardAdapter(remainCardList, false)
+            )
+
+            5 -> ViewUtil.setRecycler(
+                bottomRecyclerView,
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false),
+                rightSpace = 0,
+                topSpace = 0,
+                adapter =  CardAdapter(remainCardList, false)
+            )
+        }
+
     }
 
     /**
