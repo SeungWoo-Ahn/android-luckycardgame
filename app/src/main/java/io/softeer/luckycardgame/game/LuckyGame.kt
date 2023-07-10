@@ -8,6 +8,7 @@ import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager
 import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
+import io.softeer.luckycardgame.util.CardManager.putRemainCards
 import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
 import io.softeer.luckycardgame.util.ViewUtil
 
@@ -83,8 +84,7 @@ class LuckyGame(
             recyclerViewList,
             bind.root.context
         )
-        CardManager.putRemainCards(
-            deck,
+        deck.putRemainCards(
             playerNumber = playerNumber,
             bind.rvBottom,
             bind.root.context

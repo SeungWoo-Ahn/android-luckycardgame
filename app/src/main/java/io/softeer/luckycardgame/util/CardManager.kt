@@ -12,6 +12,7 @@ import io.softeer.luckycardgame.card.CardType
 object CardManager {
 
     private val deck = mutableListOf<Card>()
+    private var selectCardList = mutableListOf<Card>()
 
     /**
      * 초기화 : 카드 없으면 만들기
@@ -24,6 +25,7 @@ object CardManager {
      * 게임을 위한 덱 제공
      */
     fun MutableList<Card>.provideDeckForGame(playerNumber : Int) {
+        selectCardList = mutableListOf()
         addAll(deck.shuffled())
         if (playerNumber == 3) exceptCard(this, cardNumber = 12)
     }
@@ -31,15 +33,13 @@ object CardManager {
     /**
      * 남은 카드 하단 보드에 두기
      */
-    fun putRemainCards(
-        deck: MutableList<Card>,
+    fun MutableList<Card>.putRemainCards(
         playerNumber: Int,
         bottomRecyclerView: RecyclerView,
         context: Context
     ) {
-        val remainCardList = deck.subList(playerNumber*(11-playerNumber), deck.size)
-        showAllCardInfo(remainCardList,null)
-        sortCardList(remainCardList)
+        val remainCardList = this.subList(playerNumber*(11-playerNumber), this.size)
+        remainCardList.sorted()
         showAllCardInfo(remainCardList,null)
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
@@ -93,16 +93,30 @@ object CardManager {
         cardList.forEach {
             infoList.add(it.toString())
         }
-        var placeText = ""
-        if (playerIndex==null) placeText = "바닥" else placeText = ('A'+playerIndex).toString()
+        val placeText = if (playerIndex==null) "바닥" else ('A'+playerIndex).toString()
         Log.i(javaClass.name, "$placeText: [${infoList.joinToString(", ")}]")
     }
 
     /**
-     * 카드 정렬하기
+     * 카드 선택
      */
-    fun sortCardList(cardList : MutableList<Card>) {
-        cardList.sort()
+    fun selectCard(card : Card) {
+        selectCardList.add(card)
+        if (selectCardList.size == 3) {
+            checkCardsNumberSame(selectCardList)
+            selectCardList = mutableListOf()
+        }
+    }
+
+    /**
+     * 카드 숫자가 같은지 체크
+     */
+    fun checkCardsNumberSame(cardList: MutableList<Card>) : Boolean {
+        val counts = cardList.groupingBy { it.getCardNumber() }.eachCount()
+        val isSame = counts.any { it.value >= 3 }
+        val message = if (isSame) "같습니다" else "다릅니다"
+        Log.i(javaClass.name, "세 카드의 숫자가 $message")
+        return isSame
     }
 
 }

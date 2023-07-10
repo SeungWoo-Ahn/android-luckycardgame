@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.HolderCardBinding
+import io.softeer.luckycardgame.util.CardManager
 
 class CardAdapter(private val cardList: MutableList<Card>,private val isMine : Boolean) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
@@ -29,6 +30,9 @@ class CardAdapter(private val cardList: MutableList<Card>,private val isMine : B
             selectCardSide(bind.cardNumberBottom, card.getCardNumber().toString(), isMine)
             selectCardSide(bind.cardType, card.getCardType().typeUnicode, isMine)
             bind.cardBack.visibility = if(!isMine) View.VISIBLE else View.INVISIBLE
+            bind.root.setOnClickListener {
+                CardManager.selectCard(card)
+            }
         }
     }
 
