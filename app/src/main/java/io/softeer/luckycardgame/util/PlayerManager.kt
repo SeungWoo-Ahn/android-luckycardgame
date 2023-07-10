@@ -16,8 +16,9 @@ object PlayerManager {
         context: Context
     ) {
         for(index in 0 until  playerNumber) {
-            val player = Player(deck, playerIndex = index, 11- playerNumber)
+            val player = Player(deck, playerIndex = index, 11-playerNumber)
             player.sortCardList()
+            val cardAdapter = player.adapterByPlayer()
             CardManager.showAllCardInfo(player.cardList, index)
             this.add(player)
             ViewUtil.setRecycler(
@@ -25,7 +26,7 @@ object PlayerManager {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false),
                 rightSpace = ViewUtil.setItemSpace(playerNumber),
                 topSpace = 0,
-                adapter =  player.adapterByPlayer()
+                adapter =  cardAdapter
             )
         }
     }

@@ -5,6 +5,7 @@ class Card(
     private val number : Int,
     private val type: CardType,
 ) : Comparable<Card> {
+
     fun getCardNumber() : Int = number
 
     fun getCardType() : CardType = type

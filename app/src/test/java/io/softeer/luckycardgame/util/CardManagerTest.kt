@@ -85,7 +85,7 @@ class CardManagerTest {
 
     @Test
     fun checkCardsNumberSame() {
-        val same = mutableListOf(cardList[0],cardList[0],cardList[0])
+        val same = mutableListOf(cardList[0],cardList[12],cardList[24])
         val differentOne = mutableListOf(cardList[0],cardList[12],cardList[25])
         val differentAll = mutableListOf(cardList[0],cardList[16],cardList[25])
         assertTrue(CardManager.checkCardsNumberSame(same))

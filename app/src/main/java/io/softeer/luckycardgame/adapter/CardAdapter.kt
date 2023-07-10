@@ -9,7 +9,14 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.HolderCardBinding
 import io.softeer.luckycardgame.util.CardManager
 
-class CardAdapter(private val cardList: MutableList<Card>,private val isMine : Boolean) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
+class CardAdapter(
+    private val cardList : MutableList<Card>,
+    private val isMine : Boolean,
+) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
+
+    private var ableMinIndex = 0
+    private var ableMaxIndex = itemCount-1
+    private val selectedPosition = mutableListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = HolderCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -31,8 +38,32 @@ class CardAdapter(private val cardList: MutableList<Card>,private val isMine : B
             selectCardSide(bind.cardType, card.getCardType().typeUnicode, isMine)
             bind.cardBack.visibility = if(!isMine) View.VISIBLE else View.INVISIBLE
             bind.root.setOnClickListener {
-                CardManager.selectCard(card)
+                updateAbleIndex(adapterPosition) {
+                    selectedPosition.add(adapterPosition)
+                    flipCard(bind)
+                    CardManager.selectCard(card)
+                }
             }
+        }
+    }
+
+    private fun updateAbleIndex(position : Int, selectItem : ()->Unit) {
+        if (selectedPosition.contains(ableMinIndex)) ableMinIndex++
+        if (selectedPosition.contains(ableMaxIndex)) ableMaxIndex--
+        if (position == ableMinIndex || position == ableMaxIndex) {
+            selectItem()
+        }
+    }
+
+    /**
+     * 카드 뒤집기
+     */
+    private fun flipCard(bind : HolderCardBinding) {
+        bind.let {
+            it.cardBack.visibility = View.INVISIBLE
+            it.cardNumberTop.visibility = View.VISIBLE
+            it.cardNumberBottom.visibility = View.VISIBLE
+            it.cardType.visibility = View.VISIBLE
         }
     }
 

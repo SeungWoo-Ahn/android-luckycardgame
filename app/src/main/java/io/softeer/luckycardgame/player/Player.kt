@@ -5,13 +5,14 @@ import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.util.CardManager
 
-class Player constructor(
+class Player(
     deck: MutableList<Card>,
     playerIndex : Int,
     cardCount : Int
 ) {
     private val isMine = playerIndex == 0
     val cardList = deck.subList(playerIndex*cardCount, (playerIndex+1)*cardCount)
+    private val cardAdapter = CardAdapter(cardList, isMine)
 
     /**
      * 참가자 카드 정렬
@@ -20,7 +21,7 @@ class Player constructor(
 
     fun adapterByPlayer() : CardAdapter {
         CardManager.checkCardsNumberSame(cardList)
-        return CardAdapter(cardList, isMine)
+        return cardAdapter
     }
 
 }
