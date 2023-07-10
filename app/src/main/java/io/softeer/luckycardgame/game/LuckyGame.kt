@@ -1,14 +1,9 @@
 package io.softeer.luckycardgame.game
 
-import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButtonToggleGroup
 import io.softeer.luckycardgame.R
-import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
-import io.softeer.luckycardgame.card.CardType
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager

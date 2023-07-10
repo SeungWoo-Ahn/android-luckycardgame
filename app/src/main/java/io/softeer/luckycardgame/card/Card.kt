@@ -4,15 +4,18 @@ package io.softeer.luckycardgame.card
 class Card(
     private val number : Int,
     private val type: CardType,
-) {
-
+) : Comparable<Card> {
     fun getCardNumber() : Int = number
 
-    fun getCardType() : String = type.typeUnicode
+    fun getCardType() : CardType = type
 
-    // 필요한 카드 정보만 볼 수 있게 메서드를 만들었다.
-    fun cardInfo() : String {
+    // 카드 정보 출력
+    override fun toString(): String {
         return "${type.typeUnicode}${String.format("%02d",number)}"
+    }
+
+    override fun compareTo(other: Card): Int {
+        return compareValuesBy(this, other, { it.number }, { it.type })
     }
 
     // 해당 카드의 최대/최소 숫자를 설정하면 나중에 유지보수에 편리했다.
@@ -20,5 +23,4 @@ class Card(
         const val MAX_NUMBER = 12
         const val MIN_NUMBER = 1
     }
-
 }

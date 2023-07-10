@@ -1,6 +1,7 @@
 package io.softeer.luckycardgame.util
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.softeer.luckycardgame.card.Card
@@ -16,6 +17,9 @@ object PlayerManager {
     ) {
         for(index in 0 until  playerNumber) {
             val player = Player(deck, playerIndex = index, 11- playerNumber)
+            CardManager.showAllCardInfo(player.cardList, index)
+            CardManager.sortCardList(player.cardList)
+            CardManager.showAllCardInfo(player.cardList, index)
             this.add(player)
             ViewUtil.setRecycler(
                 recyclerViewList[index],

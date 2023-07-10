@@ -26,7 +26,6 @@ object CardManager {
     fun MutableList<Card>.provideDeckForGame(playerNumber : Int) {
         addAll(deck.shuffled())
         if (playerNumber == 3) exceptCard(this, cardNumber = 12)
-        Log.i("GAME DECK", showAllCardInfo(this))
     }
 
     /**
@@ -39,6 +38,9 @@ object CardManager {
         context: Context
     ) {
         val remainCardList = deck.subList(playerNumber*(11-playerNumber), deck.size)
+        showAllCardInfo(remainCardList,null)
+        sortCardList(remainCardList)
+        showAllCardInfo(remainCardList,null)
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
                 bottomRecyclerView,
@@ -86,12 +88,21 @@ object CardManager {
     /**
      * 모든 카드 정보 보기
      */
-    private fun showAllCardInfo(deck: MutableList<Card>) : String {
+    fun showAllCardInfo(cardList: MutableList<Card>, playerIndex : Int?) {
         val infoList = mutableListOf<String>()
-        deck.forEach {
-            infoList.add(it.cardInfo())
+        cardList.forEach {
+            infoList.add(it.toString())
         }
-        return infoList.joinToString(", ")
+        var placeText = ""
+        if (playerIndex==null) placeText = "바닥" else placeText = ('A'+playerIndex).toString()
+        Log.i(javaClass.name, "$placeText: [${infoList.joinToString(", ")}]")
+    }
+
+    /**
+     * 카드 정렬하기
+     */
+    fun sortCardList(cardList : MutableList<Card>) {
+        cardList.sort()
     }
 
 }

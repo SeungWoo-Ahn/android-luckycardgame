@@ -9,7 +9,7 @@ class Player constructor(
     cardCount : Int
 ) {
     private var isMine = playerIndex == 0
-    private val cardList = deck.subList(playerIndex*cardCount, (playerIndex+1)*cardCount)
+    val cardList = deck.subList(playerIndex*cardCount, (playerIndex+1)*cardCount)
 
     fun adapterByPlayer() : CardAdapter = CardAdapter(cardList, isMine)
 

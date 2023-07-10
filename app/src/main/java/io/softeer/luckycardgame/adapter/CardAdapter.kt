@@ -27,7 +27,7 @@ class CardAdapter(private val cardList: MutableList<Card>,private val isMine : B
         fun bind(card : Card) {
             selectCardSide(bind.cardNumberTop, card.getCardNumber().toString(), isMine)
             selectCardSide(bind.cardNumberBottom, card.getCardNumber().toString(), isMine)
-            selectCardSide(bind.cardType, card.getCardType(), isMine)
+            selectCardSide(bind.cardType, card.getCardType().typeUnicode, isMine)
             bind.cardBack.visibility = if(!isMine) View.VISIBLE else View.INVISIBLE
         }
     }
