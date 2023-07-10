@@ -10,7 +10,7 @@ class Player constructor(
     playerIndex : Int,
     cardCount : Int
 ) {
-    private var isMine = playerIndex == 0
+    private val isMine = playerIndex == 0
     val cardList = deck.subList(playerIndex*cardCount, (playerIndex+1)*cardCount)
 
     /**

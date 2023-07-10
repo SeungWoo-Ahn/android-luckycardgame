@@ -21,6 +21,8 @@ object CardManager {
         if (deck.isEmpty()) makeDeck()
     }
 
+    fun getDeck() = deck
+
     /**
      * 게임을 위한 덱 제공
      */

@@ -17,7 +17,6 @@ object PlayerManager {
     ) {
         for(index in 0 until  playerNumber) {
             val player = Player(deck, playerIndex = index, 11- playerNumber)
-            CardManager.showAllCardInfo(player.cardList, index)
             player.sortCardList()
             CardManager.showAllCardInfo(player.cardList, index)
             this.add(player)
