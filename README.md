@@ -32,3 +32,17 @@ Android 학습 프로젝트 #1
    2) 플레이어 초기화
    3) 플레이어에게 카드 배분
    4) 하단 보드 카드 배분
+
+
+## 게임로직 구현하기
+
+1. 플레이어를 관리하는 PlayerManager와 카드를 관리하는 CardManager를 Object로 만들었다
+2. PlayerManager에선 Player객체를 생성하고 RecyclerView와 Adapter를 연결한다
+3. CardManager에선
+   1) 사용할 카드를 생성 (한 번만)
+   2) 카드를 섞고 게임에 제공
+   3) 남은 카드를 하단 보드에 제공
+   4) 카드 고르기
+   5) 고른 세 카드의 숫자가 모두 동일한지 판별
+4. CardAdapter에서 각 카드(아이템)을 클릭하면 3-4의 메서드를 실행한다
+5. Card 클래스에서 compareTo를 오버라이딩하여 sort()를 사용하면 숫자 및 타입(개, 고양이, 소 순서)으로 정렬한다
