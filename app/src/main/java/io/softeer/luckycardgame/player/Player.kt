@@ -1,27 +1,26 @@
 package io.softeer.luckycardgame.player
 
-import android.util.Log
-import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.util.CardManager
 
 class Player(
     deck: MutableList<Card>,
-    playerIndex : Int,
+    playerId : Int,
     cardCount : Int
 ) {
-    private val isMine = playerIndex == 0
-    val cardList = deck.subList(playerIndex*cardCount, (playerIndex+1)*cardCount)
-    private val cardAdapter = CardAdapter(cardList, isMine)
+
+    private val id = playerId
+    val cardList = deck.subList(id*cardCount, (id+1)*cardCount)
+    val selectCards = mutableListOf<Card>()
 
     /**
      * 참가자 카드 정렬
      */
-    fun sortCardList() = cardList.sort()
-
-    fun adapterByPlayer() : CardAdapter {
-        CardManager.checkCardsNumberSame(cardList)
-        return cardAdapter
+    fun sortCardList() {
+        cardList.let {
+            it.sort()
+            CardManager.showAllCardInfo(it,id)
+        }
     }
 
 }

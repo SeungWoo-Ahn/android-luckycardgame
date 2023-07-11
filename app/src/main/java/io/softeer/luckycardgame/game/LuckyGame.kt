@@ -1,8 +1,11 @@
 package io.softeer.luckycardgame.game
 
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButtonToggleGroup
 import io.softeer.luckycardgame.R
+import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
@@ -16,10 +19,11 @@ class LuckyGame(
     private val bind : ActivityMainBinding
 ) : MaterialButtonToggleGroup.OnButtonCheckedListener {
 
-    private var deck = mutableListOf<Card>()
-    private var playerList = mutableListOf<Player>()
+    private val deck = mutableListOf<Card>()
+    private val playerList = mutableListOf<Player>()
     private val recyclerViewList : List<RecyclerView> =
         listOf(bind.rvA, bind.rvB, bind.rvC, bind.rvD, bind.rvE)
+    private val adapterList = mutableListOf<CardAdapter>()
 
     /*************************************************
      *** 화면 제어
@@ -64,6 +68,53 @@ class LuckyGame(
         }
     }
 
+    /**
+     * 어뎁터와 연결
+     */
+    private fun connectAdapter(playerNumber: Int) {
+        for ((idx,adapter) in adapterList.withIndex()) {
+            if (idx == adapterList.size-1) {
+                connectBottomAdapter(playerNumber,adapter)
+                continue
+            }
+            ViewUtil.setRecycler(
+                recyclerViewList[idx],
+                layoutManager = LinearLayoutManager(bind.root.context, RecyclerView.HORIZONTAL, false),
+                rightSpace = ViewUtil.setItemSpace(playerNumber),
+                topSpace = 0,
+                adapter
+            )
+        }
+    }
+
+    private fun connectBottomAdapter(playerNumber: Int, adapter: CardAdapter) {
+        when(playerNumber) {
+            3 -> ViewUtil.setRecycler(
+                bind.rvBottom,
+                layoutManager = GridLayoutManager(bind.root.context,2,RecyclerView.HORIZONTAL,false),
+                rightSpace = 40,
+                topSpace = 20,
+                adapter
+            )
+
+            4 -> ViewUtil.setRecycler(
+                bind.rvBottom,
+                layoutManager = GridLayoutManager(bind.root.context,2,RecyclerView.HORIZONTAL,false),
+                rightSpace = 100,
+                topSpace = 20,
+                adapter
+            )
+
+            5 -> ViewUtil.setRecycler(
+                bind.rvBottom,
+                layoutManager = LinearLayoutManager(bind.root.context, RecyclerView.HORIZONTAL,false),
+                rightSpace = 0,
+                topSpace = 0,
+                adapter
+            )
+        }
+    }
+
     /*************************************************
      *** 게임
      *************************************************/
@@ -78,24 +129,40 @@ class LuckyGame(
     private fun play(playerNumber : Int) {
         initGame()
         deck.provideDeckForGame(playerNumber = playerNumber)
-        playerList.providePlayerForGame(
-            playerNumber = playerNumber,
-            deck = deck,
-            recyclerViewList,
-            bind.root.context
-        )
-        deck.putRemainCards(
-            playerNumber = playerNumber,
-            bind.rvBottom,
-            bind.root.context
-        )
+        playerList.providePlayerForGame(playerNumber, deck, ::selectCard, adapterList)
+        deck.putRemainCards(playerNumber, ::selectCard, adapterList)
+        connectAdapter(playerNumber)
+    }
+
+    /**
+     * 카드 선택
+     */
+    private fun selectCard(card: Card, position: Int) {
+
+        if (checkGameEnd()) endGame()
+    }
+
+    /**
+     * 게임 종료 여부 확인
+     */
+    private fun checkGameEnd() : Boolean {
+        var needEnd = false
+        return needEnd
+    }
+
+    /**
+     * 게임 종료
+     */
+    private fun endGame() {
+
     }
 
     /**
      * 게임 초기화
      */
     private fun initGame() {
-        deck = mutableListOf()
-        playerList = mutableListOf()
+        deck.clear()
+        playerList.clear()
+        adapterList.clear()
     }
 }

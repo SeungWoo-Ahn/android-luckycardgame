@@ -12,6 +12,7 @@ import io.softeer.luckycardgame.util.CardManager
 class CardAdapter(
     private val cardList : MutableList<Card>,
     private val isMine : Boolean,
+    private val onCardClick : (Card,Int)->Unit
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     private var ableMinIndex = 0
@@ -38,11 +39,7 @@ class CardAdapter(
             selectCardSide(bind.cardType, card.getCardType().typeUnicode, isMine)
             bind.cardBack.visibility = if(!isMine) View.VISIBLE else View.INVISIBLE
             bind.root.setOnClickListener {
-                updateAbleIndex(adapterPosition) {
-                    selectedPosition.add(adapterPosition)
-                    flipCard(bind)
-                    CardManager.selectCard(card)
-                }
+                onCardClick(card, adapterPosition)
             }
         }
     }

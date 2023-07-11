@@ -1,10 +1,6 @@
 package io.softeer.luckycardgame.util
 
-import android.content.Context
 import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.card.CardType
@@ -35,39 +31,17 @@ object CardManager {
      */
     fun MutableList<Card>.putRemainCards(
         playerNumber: Int,
-        bottomRecyclerView: RecyclerView,
-        context: Context
+        onCardClick : (Card,Int)->Unit,
+        adapterList : MutableList<CardAdapter>
     ) {
         val remainCardList = this.subList(playerNumber*(11-playerNumber), this.size)
-        remainCardList.sort()
-        showAllCardInfo(remainCardList,null)
-        val cardAdapter = CardAdapter(remainCardList, false)
-        when(playerNumber) {
-            3 -> ViewUtil.setRecycler(
-                bottomRecyclerView,
-                layoutManager = GridLayoutManager(context,2,RecyclerView.HORIZONTAL,false),
-                rightSpace = 40,
-                topSpace = 20,
-                adapter =  cardAdapter
-            )
-
-            4 -> ViewUtil.setRecycler(
-                bottomRecyclerView,
-                layoutManager = GridLayoutManager(context,2,RecyclerView.HORIZONTAL,false),
-                rightSpace = 100,
-                topSpace = 20,
-                adapter =  cardAdapter
-            )
-
-            5 -> ViewUtil.setRecycler(
-                bottomRecyclerView,
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false),
-                rightSpace = 0,
-                topSpace = 0,
-                adapter =  cardAdapter
+        remainCardList.let {
+            it.sort()
+            showAllCardInfo(it, null)
+            adapterList.add(
+                CardAdapter(it,false, onCardClick)
             )
         }
-
     }
 
     /**
@@ -82,9 +56,9 @@ object CardManager {
     }
 
     /**
-     * 덱에서 특정 숫자 제거하기
+     * 덱에서 특정 숫자 제거
      */
-    private fun exceptCard(deck : MutableList<Card>,cardNumber : Int): Boolean = deck.removeIf { it.getCardNumber() == cardNumber }
+    private fun exceptCard(deck : MutableList<Card>, cardNumber : Int): Boolean = deck.removeIf { it.getCardNumber() == cardNumber }
 
     /**
      * 모든 카드 정보 보기
@@ -96,13 +70,6 @@ object CardManager {
         }
         val placeText = if (playerIndex==null) "바닥" else ('A'+playerIndex).toString()
         Log.i(javaClass.name, "$placeText: [${infoList.joinToString(", ")}]")
-    }
-
-    /**
-     * 카드 선택
-     */
-    fun selectCard(card : Card) {
-        Log.i(javaClass.name, "selectCard: $card")
     }
 
     /**
