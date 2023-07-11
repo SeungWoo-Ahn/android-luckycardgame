@@ -3,16 +3,14 @@ package io.softeer.luckycardgame.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.HolderCardBinding
-import io.softeer.luckycardgame.util.CardManager
 
 class CardAdapter(
-    private val cardList : MutableList<Card>,
-    private val isMine : Boolean,
-    private val onCardClick : (Card,Int)->Unit
+    private val cardList: MutableList<Card>,
+    private val showFront : Boolean,
+    private val onCardClick : ()->Unit
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     private var ableMinIndex = 0
@@ -34,12 +32,17 @@ class CardAdapter(
 
     inner class ViewHolder(private val bind : HolderCardBinding) : RecyclerView.ViewHolder(bind.root) {
         fun bind(card : Card) {
-            selectCardSide(bind.cardNumberTop, card.getCardNumber().toString(), isMine)
-            selectCardSide(bind.cardNumberBottom, card.getCardNumber().toString(), isMine)
-            selectCardSide(bind.cardType, card.getCardType().typeUnicode, isMine)
-            bind.cardBack.visibility = if(!isMine) View.VISIBLE else View.INVISIBLE
+            card.getCardNumber().toString().let {
+                bind.cardNumberTop.text = it
+                bind.cardNumberBottom.text = it
+            }
+            bind.cardType.text = card.getCardType().typeUnicode
+            bind.groupBack.visibility = if(showFront) View.GONE else View.VISIBLE
             bind.root.setOnClickListener {
-                onCardClick(card, adapterPosition)
+                updateAbleIndex(adapterPosition) {
+                    flipCard(bind)
+                    onCardClick()
+                }
             }
         }
     }
@@ -56,24 +59,7 @@ class CardAdapter(
      * 카드 뒤집기
      */
     private fun flipCard(bind : HolderCardBinding) {
-        bind.let {
-            it.cardBack.visibility = View.INVISIBLE
-            it.cardNumberTop.visibility = View.VISIBLE
-            it.cardNumberBottom.visibility = View.VISIBLE
-            it.cardType.visibility = View.VISIBLE
-        }
+        bind.groupBack.visibility = View.VISIBLE
     }
-
-    /**
-     * isMine 속성이 true 일 때, 카드 정보가 보인다
-     * false 라면, 카드 뒷면이 보인다
-     */
-    private fun selectCardSide(textView : TextView, text : String, isMine: Boolean) {
-        textView.let {
-            it.text = text
-            it.visibility = if(isMine) View.VISIBLE else View.INVISIBLE
-        }
-    }
-
 
 }

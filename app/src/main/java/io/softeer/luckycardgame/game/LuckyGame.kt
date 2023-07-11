@@ -10,20 +10,17 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager
-import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
-import io.softeer.luckycardgame.util.CardManager.putRemainCards
-import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
 import io.softeer.luckycardgame.util.ViewUtil
 
 class LuckyGame(
     private val bind : ActivityMainBinding
 ) : MaterialButtonToggleGroup.OnButtonCheckedListener {
 
-    private val deck = mutableListOf<Card>()
+    private val gameDeck = mutableListOf<Card>()
     private val playerList = mutableListOf<Player>()
     private val recyclerViewList : List<RecyclerView> =
         listOf(bind.rvA, bind.rvB, bind.rvC, bind.rvD, bind.rvE)
-    private val adapterList = mutableListOf<CardAdapter>()
+    private val bottomCards = mutableListOf<Card>()
 
     /*************************************************
      *** 화면 제어
@@ -68,26 +65,24 @@ class LuckyGame(
         }
     }
 
-    /**
-     * 어뎁터와 연결
-     */
     private fun connectAdapter(playerNumber: Int) {
-        for ((idx,adapter) in adapterList.withIndex()) {
-            if (idx == adapterList.size-1) {
-                connectBottomAdapter(playerNumber,adapter)
-                continue
-            }
+        for ((index, player) in playerList.withIndex()) {
             ViewUtil.setRecycler(
-                recyclerViewList[idx],
+                recyclerViewList[index],
                 layoutManager = LinearLayoutManager(bind.root.context, RecyclerView.HORIZONTAL, false),
                 rightSpace = ViewUtil.setItemSpace(playerNumber),
                 topSpace = 0,
-                adapter
+                CardAdapter(player.cardList,player.me,::selectCard)
             )
         }
+        connectBottomAdapter(playerNumber)
     }
 
-    private fun connectBottomAdapter(playerNumber: Int, adapter: CardAdapter) {
+    private fun connectBottomAdapter(playerNumber: Int) {
+        val cardCount = 11 - playerNumber
+        val bottomCardList = gameDeck.slice(playerNumber*cardCount until  gameDeck.size).toMutableList()
+        bottomCardList.sort()
+        val adapter = CardAdapter(bottomCardList, false, ::selectCard)
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
                 bind.rvBottom,
@@ -119,50 +114,63 @@ class LuckyGame(
      *** 게임
      *************************************************/
 
-    /**
-     * 게임 시작하기
-     * 1. 게임 초기화
-     * 2. 카드 만들기
-     * 3. 참가자에게 카드 분배
-     * 4. 남은 카드 하단에 두기
-     */
+    private fun initGame() {
+        gameDeck.clear()
+        playerList.clear()
+        bottomCards.clear()
+    }
+
     private fun play(playerNumber : Int) {
         initGame()
-        deck.provideDeckForGame(playerNumber = playerNumber)
-        playerList.providePlayerForGame(playerNumber, deck, ::selectCard, adapterList)
-        deck.putRemainCards(playerNumber, ::selectCard, adapterList)
+        gameDeck.addAll(provideDeckForGame(playerNumber))
+        playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
         connectAdapter(playerNumber)
     }
 
-    /**
-     * 카드 선택
-     */
-    private fun selectCard(card: Card, position: Int) {
-
-        if (checkGameEnd()) endGame()
+    private fun provideDeckForGame(playerNumber : Int) : MutableList<Card> {
+        val gameDeck = CardManager.deck.shuffled().toMutableList()
+        if (playerNumber == 3) exceptCard(gameDeck, cardNumber = 12)
+        return  gameDeck
     }
 
-    /**
-     * 게임 종료 여부 확인
-     */
-    private fun checkGameEnd() : Boolean {
-        var needEnd = false
-        return needEnd
+    private fun exceptCard(deck : MutableList<Card>, cardNumber : Int) {
+        deck.removeIf { it.getCardNumber() == cardNumber }
     }
 
-    /**
-     * 게임 종료
-     */
+    private fun providePlayerForGame(
+        playerNumber: Int,
+        gameDeck: MutableList<Card>,
+    ) : MutableList<Player> {
+        val playerList = mutableListOf<Player>()
+        val cardCount = 11 - playerNumber
+        for (index in 0 until  playerNumber) {
+            val eachCards = gameDeck.slice(index*cardCount until  (index+1)*cardCount).toMutableList()
+            val player = makePlayer(gameDeck, index, cardCount)
+            sortPlayerCards(player)
+            playerList.add(player)
+        }
+        return playerList
+    }
+
+    private fun makePlayer(gameDeck: MutableList<Card>, index : Int, cardCount : Int) : Player {
+        val eachCards = gameDeck.slice(index*cardCount until  (index+1)*cardCount).toMutableList()
+        return Player(eachCards,index)
+    }
+
+    private fun sortPlayerCards(player: Player) : List<Card> {
+        player.sortCardList()
+        return player.cardList
+    }
+
+    private fun selectCard() {
+        if (checkNeedEnd()) endGame()
+    }
+
+    private fun checkNeedEnd() : Boolean {
+        return false
+    }
+
     private fun endGame() {
 
-    }
-
-    /**
-     * 게임 초기화
-     */
-    private fun initGame() {
-        deck.clear()
-        playerList.clear()
-        adapterList.clear()
     }
 }

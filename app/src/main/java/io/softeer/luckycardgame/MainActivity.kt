@@ -16,13 +16,7 @@ import io.softeer.luckycardgame.util.ViewUtil
 
 class MainActivity : AppCompatActivity() {
 
-    /**
-     * 카드를 담을 리스트
-     */
-    private var cardList = mutableListOf<Card>()
     private lateinit var bind : ActivityMainBinding
-    private lateinit var recyclerViewList : List<RecyclerView>
-    private lateinit var playerList : MutableList<Player>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

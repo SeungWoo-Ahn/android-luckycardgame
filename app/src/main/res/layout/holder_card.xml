@@ -5,7 +5,6 @@
     android:layout_height="@dimen/card_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:layout_constraintDimensionRatio="2:1"
     android:background="@drawable/cl_card"
     android:padding="@dimen/card_inner_padding">
     <TextView
@@ -28,16 +27,6 @@
         android:textSize="@dimen/card_number_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    <ImageView
-        android:id="@+id/card_back"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/card_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
     <TextView
         android:id="@+id/card_type"
         android:layout_width="wrap_content"
@@ -48,4 +37,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="🐶"/>
+    <View
+        android:id="@+id/card_back_side"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+    <ImageView
+        android:id="@+id/card_back_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/card_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/image_card_back"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="card_back_image,card_back_side"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,6 @@ package io.softeer.luckycardgame.util
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
@@ -11,24 +10,6 @@ import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.adapter.RecyclerItemDecoration
 
 object ViewUtil {
-
-    /**
-     * 리사이클러뷰 설정
-     */
-    fun setRecycler(
-        recyclerView: RecyclerView,
-        layoutManager: LayoutManager,
-        rightSpace: Int,
-        topSpace: Int,
-        adapter: CardAdapter
-    ) {
-        recyclerView.let {
-            it.layoutManager = layoutManager
-            if (it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
-            it.addItemDecoration(RecyclerItemDecoration(rightSpace,topSpace))
-            it.adapter = adapter
-        }
-    }
 
     /**
      * 보드 뷰 변경
@@ -62,6 +43,24 @@ object ViewUtil {
             }
         }
         play(playerNumber)
+    }
+
+    /**
+     * 리사이클러뷰 설정
+     */
+    fun setRecycler(
+        recyclerView: RecyclerView,
+        layoutManager: LayoutManager,
+        rightSpace: Int,
+        topSpace: Int,
+        adapter: CardAdapter
+    ) {
+        recyclerView.let {
+            it.layoutManager = layoutManager
+            if (it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
+            it.addItemDecoration(RecyclerItemDecoration(rightSpace,topSpace))
+            it.adapter = adapter
+        }
     }
 
     /**
