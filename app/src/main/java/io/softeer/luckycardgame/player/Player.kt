@@ -8,11 +8,25 @@ class Player(
     private val playerId : Int,
 ) {
     val me = playerId == 0
-    private fun showPlayerCardsInfo() = CardManager.showAllCardInfo(cardList, playerId)
+    fun showPlayerCardsInfo() = CardManager.showAllCardInfo(cardList, playerId)
 
     fun sortCardList() {
         cardList.sort()
-//        showPlayerCardsInfo()
     }
 
+    fun removeSameNumbers() : List<Card> {
+        val counts = mutableMapOf<Int, Int>()
+        val result = mutableListOf<Card>()
+        for (card in cardList) {
+            val number = card.getCardNumber()
+            counts[number] = counts.getOrDefault(number, 0) + 1
+        }
+        for (card in cardList) {
+            val number = card.getCardNumber()
+            if (counts[number] == 3) {
+                result.add(card)
+            }
+        }
+        return result
+    }
 }

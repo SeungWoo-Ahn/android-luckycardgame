@@ -37,6 +37,21 @@ class PlayerCardTest {
         Card(1,CardType.Cat)
     )
 
+    private val playerCardAllDifferent = Player(cardsAllDifferent.toMutableList(), 0)
+
+    private val playerCardPartDifferent = Player(
+        mutableListOf(
+            Card(5,CardType.Dog),
+            Card(1,CardType.Cow),
+            Card(2,CardType.Dog),
+            Card(1,CardType.Cat),
+            Card(1,CardType.Dog)
+        ),
+        0
+    )
+
+    private val playerCardAllSame = Player(cardsDifferentTypeSameNumber.toMutableList(),0)
+
     @Test
     fun sortCards_cardsAllDifferent_sortNumberType() {
         val expected = listOf(
@@ -44,9 +59,9 @@ class PlayerCardTest {
             Card(2,CardType.Dog),
             Card(3,CardType.Cow),
             Card(4,CardType.Cat),
-            Card(5,CardType.Dog),
+            Card(5,CardType.Dog)
         )
-        val actual = PlayerManager.sortPlayerCards(Player(cardsAllDifferent.toMutableList(), 0))
+        val actual = PlayerManager.sortPlayerCards(playerCardAllDifferent)
         assertEquals(expected, actual)
     }
 
@@ -70,7 +85,7 @@ class PlayerCardTest {
             Card(1,CardType.Cat),
             Card(1,CardType.Cow)
         )
-        val actual = PlayerManager.sortPlayerCards(Player(cardsDifferentTypeSameNumber.toMutableList(), 0))
+        val actual = PlayerManager.sortPlayerCards(playerCardAllSame)
         assertEquals(expected, actual)
     }
 
@@ -84,4 +99,30 @@ class PlayerCardTest {
         val actual = PlayerManager.sortPlayerCards(Player(cardsAllSame.toMutableList(), 0))
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun removeCards_cardsAllDifferent_removeNone() {
+        val expected = listOf<Card>()
+        val actual = PlayerManager.removePlayerSameNumbers(playerCardAllDifferent)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun removeCards_cardsDifferentPart_removePart() {
+        val expected = listOf(
+            Card(1,CardType.Cow),
+            Card(1,CardType.Cat),
+            Card(1,CardType.Dog)
+        )
+        val actual = PlayerManager.removePlayerSameNumbers(playerCardPartDifferent)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun removeCards_cardsAllSame_removeAll() {
+        val expected = cardsDifferentTypeSameNumber
+        val actual = PlayerManager.removePlayerSameNumbers(playerCardAllSame)
+        assertEquals(expected, actual)
+    }
+
 }

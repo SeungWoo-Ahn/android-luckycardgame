@@ -12,6 +12,7 @@ object PlayerManager {
         for (index in 0 until  playerNumber) {
             val player = makePlayer(gameDeck, index, playerNumber)
             sortPlayerCards(player)
+            player.showPlayerCardsInfo()
             playerList.add(player)
         }
         return playerList
@@ -25,5 +26,9 @@ object PlayerManager {
     fun sortPlayerCards(player: Player) : List<Card> {
         player.sortCardList()
         return player.cardList
+    }
+
+    fun removePlayerSameNumbers(player : Player) : List<Card> {
+        return player.removeSameNumbers()
     }
 }
