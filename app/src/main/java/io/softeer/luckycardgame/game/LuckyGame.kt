@@ -9,8 +9,8 @@ import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
-import io.softeer.luckycardgame.util.CardManager
 import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
+import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
 import io.softeer.luckycardgame.util.ViewUtil
 
 class LuckyGame(
@@ -126,30 +126,6 @@ class LuckyGame(
         gameDeck.addAll(provideDeckForGame(playerNumber))
         playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
         connectAdapter(playerNumber)
-    }
-
-    private fun providePlayerForGame(
-        playerNumber: Int,
-        gameDeck: MutableList<Card>,
-    ) : MutableList<Player> {
-        val playerList = mutableListOf<Player>()
-        val cardCount = 11 - playerNumber
-        for (index in 0 until  playerNumber) {
-            val player = makePlayer(gameDeck, index, cardCount)
-            sortPlayerCards(player)
-            playerList.add(player)
-        }
-        return playerList
-    }
-
-    private fun makePlayer(gameDeck: MutableList<Card>, index : Int, cardCount : Int) : Player {
-        val eachCards = gameDeck.slice(index*cardCount until  (index+1)*cardCount).toMutableList()
-        return Player(eachCards,index)
-    }
-
-    private fun sortPlayerCards(player: Player) : List<Card> {
-        player.sortCardList()
-        return player.cardList
     }
 
     private fun selectCard() {

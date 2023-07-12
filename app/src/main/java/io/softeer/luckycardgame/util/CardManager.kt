@@ -7,7 +7,7 @@ import io.softeer.luckycardgame.card.CardType
 
 object CardManager {
 
-    val deck = mutableListOf<Card>()
+    private val deck = mutableListOf<Card>()
 
     /**
      * 초기화 : 카드 없으면 만들기
