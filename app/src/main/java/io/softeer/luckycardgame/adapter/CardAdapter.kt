@@ -41,7 +41,6 @@ class CardAdapter(
             bind.root.setOnClickListener {
                 updateAbleIndex(adapterPosition) {
                     flipCard(bind)
-                    onCardClick()
                 }
             }
         }
@@ -51,6 +50,7 @@ class CardAdapter(
         if (selectedPosition.contains(ableMinIndex)) ableMinIndex++
         if (selectedPosition.contains(ableMaxIndex)) ableMaxIndex--
         if (position == ableMinIndex || position == ableMaxIndex) {
+            selectedPosition.add(position)
             selectItem()
         }
     }
@@ -59,7 +59,8 @@ class CardAdapter(
      * 카드 뒤집기
      */
     private fun flipCard(bind : HolderCardBinding) {
-        bind.groupBack.visibility = View.VISIBLE
+        bind.groupFront.visibility = View.VISIBLE
+        bind.groupBack.visibility = View.GONE
     }
 
 }

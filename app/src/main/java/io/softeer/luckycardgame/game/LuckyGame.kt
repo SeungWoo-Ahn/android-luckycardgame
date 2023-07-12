@@ -144,7 +144,6 @@ class LuckyGame(
         val playerList = mutableListOf<Player>()
         val cardCount = 11 - playerNumber
         for (index in 0 until  playerNumber) {
-            val eachCards = gameDeck.slice(index*cardCount until  (index+1)*cardCount).toMutableList()
             val player = makePlayer(gameDeck, index, cardCount)
             sortPlayerCards(player)
             playerList.add(player)

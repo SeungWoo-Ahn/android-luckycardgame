@@ -7,6 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/cl_card"
     android:padding="@dimen/card_inner_padding">
+
     <TextView
         android:id="@+id/card_number_top"
         android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
         android:textSize="@dimen/card_number_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/card_number_bottom"
         android:layout_width="wrap_content"
@@ -27,6 +29,7 @@
         android:textSize="@dimen/card_number_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
         android:id="@+id/card_type"
         android:layout_width="wrap_content"
@@ -37,11 +40,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="🐶"/>
+
     <View
-        android:id="@+id/card_back_side"
+        android:id="@+id/card_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"/>
+
     <ImageView
         android:id="@+id/card_back_image"
         android:layout_width="25dp"
@@ -52,10 +57,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/image_card_back"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_front"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="card_number_top,card_number_bottom,card_type"/>
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="card_back_image,card_back_side"
-        android:visibility="gone"/>
+        app:constraint_referenced_ids="card_back_image,card_back"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
