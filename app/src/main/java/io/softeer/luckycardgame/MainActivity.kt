@@ -33,13 +33,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUI() {
         recyclerViewList.addAll(listOf(bind.rvA , bind.rvB, bind.rvC, bind.rvD, bind.rvE))
-        manageButton()
+        setButton()
     }
 
     /**
      * 버튼을 제어
      */
-    private fun manageButton() {
+    private fun setButton() {
         bind.toggleButton.addOnButtonCheckedListener { button, checkId, isChecked ->
             when(button.checkedButtonId) {
                 R.id.button1 -> ViewUtil.changeBoardView(
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun playCardGame(playerNumber: Int) {
         makeCard(playerNumber)
-        initiateGame(playerNumber)
+        setGame(playerNumber)
     }
 
     /**
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 게임 초기화
      */
-    private fun initiateGame(playerNumber: Int) {
+    private fun setGame(playerNumber: Int) {
         playerList.clear()
         makePlayer(playerNumber, 11-playerNumber)
     }
