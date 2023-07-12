@@ -18,6 +18,12 @@ class Card(
         return compareValuesBy(this, other, { it.number }, { it.type })
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Card) return false
+        return number == other.getCardNumber() && type == other.getCardType()
+    }
+
     companion object {
         const val MAX_NUMBER = 12
         const val MIN_NUMBER = 1

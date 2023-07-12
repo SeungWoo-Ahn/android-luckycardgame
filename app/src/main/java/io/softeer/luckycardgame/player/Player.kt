@@ -12,7 +12,7 @@ class Player(
 
     fun sortCardList() {
         cardList.sort()
-        showPlayerCardsInfo()
+//        showPlayerCardsInfo()
     }
 
 }
