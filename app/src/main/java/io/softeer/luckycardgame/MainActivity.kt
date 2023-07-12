@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
      */
     private var cardList = mutableListOf<Card>()
     private lateinit var bind : ActivityMainBinding
-    private lateinit var recyclerViewList : List<RecyclerView>
-    private lateinit var playerList : MutableList<Player>
+    private val recyclerViewList = mutableListOf<RecyclerView>()
+    private val playerList = mutableListOf<Player>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUI() {
-        recyclerViewList = listOf(bind.rvA , bind.rvB, bind.rvC, bind.rvD, bind.rvE)
+        recyclerViewList.addAll(listOf(bind.rvA , bind.rvB, bind.rvC, bind.rvD, bind.rvE))
         manageButton()
     }
 
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
      * 게임 초기화
      */
     private fun initiateGame(playerNumber: Int) {
-        playerList = mutableListOf()
+        playerList.clear()
         makePlayer(playerNumber, 11-playerNumber)
     }
 
