@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.adapter.RecyclerItemDecoration
 
 object ViewUtil {
@@ -18,11 +19,13 @@ object ViewUtil {
         layoutManager: LayoutManager,
         rightSpace: Int,
         topSpace: Int,
+        adapter: CardAdapter
     ) {
         recyclerView.let {
             it.layoutManager = layoutManager
             if (it.itemDecorationCount != 0) it.removeItemDecoration(it.getItemDecorationAt(0))
             it.addItemDecoration(RecyclerItemDecoration(rightSpace,topSpace))
+            it.adapter = adapter
         }
     }
 
