@@ -8,7 +8,20 @@ class Player(
     private val playerId : Int,
 ) {
     val me = playerId == 0
+    private var selectCount = 0
     fun showPlayerCardsInfo() = CardManager.showAllCardInfo(cardList, playerId)
+
+    fun canSelectCard() : Boolean {
+        if (selectCount == 3) {
+            selectCount = 0
+            return false
+        }
+        return true
+    }
+
+    fun selectCard() {
+        selectCount++
+    }
 
     fun sortCardList() {
         cardList.sort()
@@ -33,5 +46,11 @@ class Player(
 
     fun removeCards(selectedCards : List<Card>) {
         cardList.removeAll(selectedCards)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Player) return false
+        return playerId == other.playerId
     }
 }
