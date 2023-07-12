@@ -40,9 +40,7 @@ class MainActivity : AppCompatActivity() {
      * 버튼을 제어
      */
     private fun manageButton() {
-
         bind.toggleButton.addOnButtonCheckedListener { button, checkId, isChecked ->
-
             when(button.checkedButtonId) {
                 R.id.button1 -> ViewUtil.changeBoardView(
                     bind.groupBoardD,
@@ -71,9 +69,7 @@ class MainActivity : AppCompatActivity() {
                     ::playCardGame
                 )
             }
-
         }
-
     }
 
     /**
@@ -134,14 +130,12 @@ class MainActivity : AppCompatActivity() {
         playerList[0].changeToMyCard()
         matchAdapter()
         makeBoard(cardList.subList(playerNumber*cardCount,cardList.size), playerNumber)
-
     }
 
     /**
      * 어댑터 연결하기
      */
     private fun matchAdapter() {
-
         for (index in 0 until playerList.size) {
             ViewUtil.setRecycler(
                 recyclerViewList[index],
@@ -157,7 +151,6 @@ class MainActivity : AppCompatActivity() {
      * 하단 보드 만들기
      */
     private fun makeBoard(cardList: MutableList<Card>, playerNumber: Int) {
-
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
                     bind.rvBottom,
@@ -166,6 +159,7 @@ class MainActivity : AppCompatActivity() {
                     topSpace = 20,
                     adapter =  CardAdapter(cardList, false)
                 )
+
             4 -> ViewUtil.setRecycler(
                     bind.rvBottom,
                     layoutManager = GridLayoutManager(this,2,RecyclerView.HORIZONTAL,false),
@@ -173,6 +167,7 @@ class MainActivity : AppCompatActivity() {
                     topSpace = 20,
                     adapter =  CardAdapter(cardList, false)
                 )
+
             5 -> ViewUtil.setRecycler(
                     bind.rvBottom,
                     layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false),
