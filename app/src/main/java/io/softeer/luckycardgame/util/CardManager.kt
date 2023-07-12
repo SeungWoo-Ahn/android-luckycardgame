@@ -30,18 +30,18 @@ object CardManager {
     /**
      * 게임을 위한 덱 제공
      */
-/*    fun provideDeckForGame(playerNumber : Int) : MutableList<Card> {
+    fun provideDeckForGame(playerNumber : Int) : MutableList<Card> {
         val gameDeck = deck.shuffled().toMutableList()
         if (playerNumber == 3) exceptCard(gameDeck, cardNumber = 12)
         return  gameDeck
-    }*/
+    }
 
     /**
      * 덱에서 특정 숫자 제거
      */
-/*    private fun exceptCard(deck : MutableList<Card>, cardNumber : Int) {
+    private fun exceptCard(deck : MutableList<Card>, cardNumber : Int) {
         deck.removeIf { it.getCardNumber() == cardNumber }
-    }*/
+    }
 
     /**
      * 모든 카드 정보 보기

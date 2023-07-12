@@ -10,6 +10,7 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager
+import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
 import io.softeer.luckycardgame.util.ViewUtil
 
 class LuckyGame(
@@ -125,16 +126,6 @@ class LuckyGame(
         gameDeck.addAll(provideDeckForGame(playerNumber))
         playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
         connectAdapter(playerNumber)
-    }
-
-    private fun provideDeckForGame(playerNumber : Int) : MutableList<Card> {
-        val gameDeck = CardManager.deck.shuffled().toMutableList()
-        if (playerNumber == 3) exceptCard(gameDeck, cardNumber = 12)
-        return  gameDeck
-    }
-
-    private fun exceptCard(deck : MutableList<Card>, cardNumber : Int) {
-        deck.removeIf { it.getCardNumber() == cardNumber }
     }
 
     private fun providePlayerForGame(
