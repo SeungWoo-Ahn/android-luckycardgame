@@ -4,7 +4,7 @@ import io.softeer.luckycardgame.util.CardManager
 import org.junit.Assert.*
 import org.junit.Test
 
-class CardTest {
+class Card_MakeDeckTest {
 
     @Test
     fun provideDeck_forThreePlayer_thirtyThreeCardsCreate() {

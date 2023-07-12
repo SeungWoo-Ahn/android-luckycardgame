@@ -129,14 +129,6 @@ class LuckyGame(
     }
 
     private fun selectCard() {
-        if (checkNeedEnd()) endGame()
-    }
-
-    private fun checkNeedEnd() : Boolean {
-        return false
-    }
-
-    private fun endGame() {
 
     }
 }

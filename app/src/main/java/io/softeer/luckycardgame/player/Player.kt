@@ -27,6 +27,11 @@ class Player(
                 result.add(card)
             }
         }
+        removeCards(result)
         return result
+    }
+
+    fun removeCards(selectedCards : List<Card>) {
+        cardList.removeAll(selectedCards)
     }
 }

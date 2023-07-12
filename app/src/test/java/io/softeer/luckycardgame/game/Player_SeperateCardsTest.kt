@@ -7,7 +7,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class PlayerTest {
+class Player_SeperateCardsTest {
 
     private val deck = mutableListOf<Card>()
     private val deckForThreePlayer = mutableListOf<Card>()
