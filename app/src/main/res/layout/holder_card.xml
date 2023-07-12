@@ -8,6 +8,7 @@
     app:layout_constraintDimensionRatio="2:1"
     android:background="@drawable/cl_card"
     android:padding="@dimen/card_inner_padding">
+
     <TextView
         android:id="@+id/card_number_top"
         android:layout_width="wrap_content"
@@ -18,6 +19,7 @@
         android:textSize="@dimen/card_number_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/card_number_bottom"
         android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
         android:textSize="@dimen/card_number_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
     <ImageView
         android:id="@+id/card_back"
         android:layout_width="25dp"
@@ -38,6 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
+
     <TextView
         android:id="@+id/card_type"
         android:layout_width="wrap_content"
@@ -48,4 +52,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="🐶"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
