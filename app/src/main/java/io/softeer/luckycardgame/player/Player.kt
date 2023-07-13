@@ -10,7 +10,7 @@ class Player(
     val playerId : Int,
 ) {
     val me = playerId == 0
-    val matchList = mutableListOf<Int>()
+    val matchList = mutableSetOf<Int>()
     private val selectCards = mutableListOf<Card>()
     fun showPlayerCardsInfo() = CardManager.showAllCardInfo(cardList, playerId)
 
@@ -54,7 +54,7 @@ class Player(
             }
         }
         cardList.removeAll(result)
-        return matchList
+        return matchList.toList()
     }
 
     private fun sayMyTurn() {

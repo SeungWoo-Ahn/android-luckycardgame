@@ -20,7 +20,7 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var bind : ActivityResultBinding
     private val playerList = GameManager.playerList
-    private val winnerList = listOf<Int>()
+    private val winnerList = GameManager.findWinner()
     private val winnerName = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,14 +78,15 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
     private fun colorWinnerBoards() {
         val boardList = listOf(bind.tvBoardOne, bind.tvBoardTwo, bind.tvBoardThree, bind.tvBoardFour, bind.tvBoardFive)
         for (winId in winnerList) {
-            boardList[winId].setBackgroundColor(ContextCompat.getColor(this, R.color.pink))
+            boardList[winId].isEnabled = false
             winnerName.add(('A'+winId).toString())
         }
+        winnerName.sort()
     }
 
     private fun setWinnerText() {
-        val winnerNames = winnerName.joinToString("와 ")
-        bind.tvWinner.text = "이번 게임은 ${winnerNames}가 승리했습니다"
+        val winnerNameStr = winnerName.joinToString("와 ")
+        bind.tvWinner.text = "이번 게임은 ${winnerNameStr}가 승리했습니다"
     }
 
     private fun setButton() {

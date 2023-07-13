@@ -50,7 +50,7 @@ object GameManager {
     fun checkGameNeedEnd(
         cardNumber : Int,
         matchPool : MutableList<Int>,
-        onlyTrue : Boolean
+        onlyCheck : Boolean
     ) : Boolean {
         var needEnd = false
         if (cardNumber == 7) {
@@ -59,7 +59,7 @@ object GameManager {
         if (cardNumber != 7) {
             needEnd = matchPool.any { it + cardNumber == 7 || abs(it - cardNumber) == 7 }
         }
-        if (!onlyTrue) matchPool.add(cardNumber)
+        if (!onlyCheck) matchPool.add(cardNumber)
         return needEnd
     }
 
@@ -73,7 +73,7 @@ object GameManager {
         selectPool.clear()
     }
 
-    fun findWinner(matchPool: MutableList<Int>, playerList: MutableList<Player>) : List<Int> {
+    fun findWinner() : List<Int> {
         val winNumbers = mutableListOf<Int>()
         for (matchNumber in matchPool) {
             if (checkGameNeedEnd(matchNumber, matchPool, true)) winNumbers.add(matchNumber)

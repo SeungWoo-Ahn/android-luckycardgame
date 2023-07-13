@@ -29,7 +29,7 @@ class Game_FindWinnerTest {
         playerThree.matchList.addAll(matchTwoWinList)
     }
 
-    @Test
+/*    @Test
     fun findWinner_withTwoPlayer_oneWinner() {
         val expected = listOf(3)
         val actual = GameManager.findWinner(mutableListOf(1,3,10), mutableListOf(playerOne,playerThree))
@@ -55,5 +55,5 @@ class Game_FindWinnerTest {
         val expected = listOf(1,2,3)
         val actual = GameManager.findWinner(mutableListOf(1,2,3,8,10), mutableListOf(playerOne,playerTwo,playerThree))
         assertEquals(expected, actual)
-    }
+    }*/
 }

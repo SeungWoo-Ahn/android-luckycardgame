@@ -14,7 +14,7 @@ import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
 import io.softeer.luckycardgame.util.GameManager.selectCardByPlayer
 import io.softeer.luckycardgame.util.GameManager.setGameResult
 import io.softeer.luckycardgame.util.GameManager.updateGameUI
-import io.softeer.luckycardgame.util.PlayerManager.checkPlayerQueueNeedEnd
+import io.softeer.luckycardgame.util.PlayerManager.checkPlayerListNeedEnd
 import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
 import io.softeer.luckycardgame.util.ViewUtil
 import java.util.LinkedList
@@ -144,9 +144,9 @@ class LuckyGame(
         initGame()
         gameDeck.addAll(provideDeckForGame(playerNumber))
         playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
-        connectAdapter(playerNumber)
+        if (checkPlayerListNeedEnd(playerList, matchPool)) endGame()
         playerQueue = LinkedList(playerList)
-        if (checkPlayerQueueNeedEnd(playerQueue, matchPool)) endGame()
+        connectAdapter(playerNumber)
     }
 
     private fun selectCard(card: Card, adapterId : Int) {

@@ -13,6 +13,7 @@ object PlayerManager {
         for (index in 0 until  playerNumber) {
             val player = makePlayer(gameDeck, index, playerNumber)
             sortPlayerCards(player)
+            player.removeSameNumbers()
             player.showPlayerCardsInfo()
             playerList.add(player)
         }
@@ -29,11 +30,11 @@ object PlayerManager {
         return player.cardList
     }
 
-    fun checkPlayerQueueNeedEnd(playerQueue: Queue<Player>, matchPool: MutableList<Int>) : Boolean {
+    fun checkPlayerListNeedEnd(playerList: MutableList<Player>, matchPool: MutableList<Int>) : Boolean {
         var needEnd = false
-        while (playerQueue.peek() != null) {
-            val playerRemoveList = playerQueue.poll()!!.removeSameNumbers()
-            if (checkPlayerCardsBeforeGame(playerRemoveList, matchPool)) {
+        for (player in playerList) {
+            val matchListByPlayer = player.matchList.toMutableList()
+            if (checkPlayerCardsBeforeGame(matchListByPlayer, matchPool)) {
                 needEnd = true
             }
         }
