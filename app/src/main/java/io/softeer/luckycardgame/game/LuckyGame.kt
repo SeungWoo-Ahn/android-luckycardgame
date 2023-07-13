@@ -10,12 +10,8 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager
-import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
-import io.softeer.luckycardgame.util.GameManager.selectCardByPlayer
-import io.softeer.luckycardgame.util.GameManager.setGameResult
-import io.softeer.luckycardgame.util.GameManager.updateGameUI
-import io.softeer.luckycardgame.util.PlayerManager.checkPlayerListNeedEnd
-import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
+import io.softeer.luckycardgame.util.GameManager
+import io.softeer.luckycardgame.util.PlayerManager
 import io.softeer.luckycardgame.util.ViewUtil
 import java.util.LinkedList
 
@@ -130,15 +126,15 @@ class LuckyGame(
 
     private fun play(playerNumber : Int) {
         initGame()
-        gameDeck.addAll(provideDeckForGame(playerNumber))
-        playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
-        if (checkPlayerListNeedEnd(playerList, matchPool)) endGame()
+        gameDeck.addAll(CardManager.provideDeckForGame(playerNumber))
+        playerList.addAll(PlayerManager.providePlayerForGame(playerNumber, gameDeck))
+        if (PlayerManager.checkPlayerListNeedEnd(playerList, matchPool)) endGame()
         playerQueue = LinkedList(playerList)
         connectAdapter(playerNumber)
     }
 
     private fun selectCard(card: Card, adapterId : Int) {
-        val playerCardMatch = selectCardByPlayer(
+        val playerCardMatch = GameManager.selectCardByPlayer(
             playerQueue,
             card,
             adapterId,
@@ -147,12 +143,12 @@ class LuckyGame(
             ::endGame
         )
         if (playerCardMatch) {
-            updateGameUI(selectPool, adapterList)
+            GameManager.updateGameUI(selectPool, adapterList)
         }
     }
 
     private fun endGame() {
-        setGameResult(playerQueue, matchPool)
+        GameManager.setGameResult(playerQueue, matchPool)
         moveResult()
     }
 }

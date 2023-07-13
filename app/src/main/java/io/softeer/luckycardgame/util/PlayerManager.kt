@@ -12,7 +12,7 @@ object PlayerManager {
         val playerList = mutableListOf<Player>()
         for (index in 0 until  playerNumber) {
             val player = makePlayer(gameDeck, index, playerNumber)
-            sortPlayerCards(player)
+            player.sortCardList()
             player.removeSameNumbers()
             player.showPlayerCardsInfo()
             playerList.add(player)
@@ -23,11 +23,6 @@ object PlayerManager {
     fun makePlayer(gameDeck: MutableList<Card>, index : Int, playerNumber : Int) : Player {
         val eachCards = gameDeck.slice(index*(11-playerNumber) until  (index+1)*(11-playerNumber)).toMutableList()
         return Player(eachCards,index)
-    }
-
-    fun sortPlayerCards(player: Player) : List<Card> {
-        player.sortCardList()
-        return player.cardList
     }
 
     fun checkPlayerListNeedEnd(playerList: MutableList<Player>, matchPool: MutableList<Int>) : Boolean {

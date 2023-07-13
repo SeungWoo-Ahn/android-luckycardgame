@@ -56,7 +56,6 @@ class CardAdapter(
         ableMinIndex = 0
         ableMaxIndex = itemCount - 1
         selectedPosition.clear()
-        Log.i(javaClass.name, "업데이트")
     }
 
     private fun updateAbleIndex(position : Int, selectItem : ()->Unit) {
