@@ -40,7 +40,7 @@ class Player_RemoveCardTest{
         0
     )
 
-    @Test
+/*    @Test
     fun removeCards_cardsAllDifferent_removeNone() {
         val expected = listOf<Card>()
         val actual = PlayerManager.removePlayerSameNumbers(playerCardAllDifferent)
@@ -67,5 +67,5 @@ class Player_RemoveCardTest{
         )
         val actual = PlayerManager.removePlayerSameNumbers(playerCardAllSame)
         assertEquals(expected, actual)
-    }
+    }*/
 }

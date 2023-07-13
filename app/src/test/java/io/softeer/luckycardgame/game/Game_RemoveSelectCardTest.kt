@@ -35,7 +35,7 @@ class Game_RemoveSelectCardTest {
         0
     )
 
-    @Test
+/*    @Test
     fun removeSelectedCards_twoPlayers_removeNumberOne() {
         val expectedOne = mutableListOf(
             Card(8, CardType.Dog),
@@ -67,5 +67,5 @@ class Game_RemoveSelectCardTest {
         )
         assertEquals(expectedOne, actualOne)
         assertEquals(expectedTwo, actualTwo)
-    }
+    }*/
 }

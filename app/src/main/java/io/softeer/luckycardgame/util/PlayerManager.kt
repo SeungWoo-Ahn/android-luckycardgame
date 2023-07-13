@@ -2,21 +2,18 @@ package io.softeer.luckycardgame.util
 
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.player.Player
+import java.util.Queue
 
 object PlayerManager {
     fun providePlayerForGame(
         playerNumber: Int,
         gameDeck: MutableList<Card>,
-        matchPool : MutableList<Int>,
-        endGame : () -> Unit
     ) : MutableList<Player> {
         val playerList = mutableListOf<Player>()
         for (index in 0 until  playerNumber) {
             val player = makePlayer(gameDeck, index, playerNumber)
             sortPlayerCards(player)
-            val removeList = player.removeSameNumbers()
             player.showPlayerCardsInfo()
-            if (checkPlayerCardsBeforeGame(removeList, matchPool)) endGame()
             playerList.add(player)
         }
         return playerList
@@ -32,9 +29,20 @@ object PlayerManager {
         return player.cardList
     }
 
-    private fun checkPlayerCardsBeforeGame(removeList: List<Int>, matchList: MutableList<Int>) : Boolean {
+    fun checkPlayerQueueNeedEnd(playerQueue: Queue<Player>, matchPool: MutableList<Int>) : Boolean {
+        var needEnd = false
+        while (playerQueue.peek() != null) {
+            val playerRemoveList = playerQueue.poll()!!.removeSameNumbers()
+            if (checkPlayerCardsBeforeGame(playerRemoveList, matchPool)) {
+                needEnd = true
+            }
+        }
+        return needEnd
+    }
+
+    private fun checkPlayerCardsBeforeGame(removeList: List<Int>, matchPool: MutableList<Int>) : Boolean {
         for (matchNumber in removeList) {
-            return GameManager.checkGameNeedEnd(matchNumber, matchList, false)
+            return GameManager.checkGameNeedEnd(matchNumber, matchPool, false)
         }
         return false
     }

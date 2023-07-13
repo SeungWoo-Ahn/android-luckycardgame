@@ -1,6 +1,5 @@
 package io.softeer.luckycardgame.game
 
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,10 @@ import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager
 import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
-import io.softeer.luckycardgame.util.GameManager
+import io.softeer.luckycardgame.util.GameManager.selectCardByPlayer
+import io.softeer.luckycardgame.util.GameManager.setGameResult
+import io.softeer.luckycardgame.util.GameManager.updateGameUI
+import io.softeer.luckycardgame.util.PlayerManager.checkPlayerQueueNeedEnd
 import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
 import io.softeer.luckycardgame.util.ViewUtil
 import java.util.LinkedList
@@ -141,13 +143,14 @@ class LuckyGame(
     fun play(playerNumber : Int) {
         initGame()
         gameDeck.addAll(provideDeckForGame(playerNumber))
-        playerList.addAll(providePlayerForGame(playerNumber, gameDeck, matchPool, ::endGame))
+        playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
         connectAdapter(playerNumber)
         playerQueue = LinkedList(playerList)
+        if (checkPlayerQueueNeedEnd(playerQueue, matchPool)) endGame()
     }
 
     private fun selectCard(card: Card, adapterId : Int) {
-        val playerCardMatch = GameManager.selectCardByPlayer(
+        val playerCardMatch = selectCardByPlayer(
             playerQueue,
             card,
             adapterId,
@@ -156,12 +159,12 @@ class LuckyGame(
             ::endGame
         )
         if (playerCardMatch) {
-            GameManager.updateGameUI(selectPool, adapterList)
+            updateGameUI(selectPool, adapterList)
         }
     }
 
     private fun endGame() {
-        GameManager.setGameResult(playerQueue, matchPool)
+        setGameResult(playerQueue, matchPool)
         moveResult()
     }
 }

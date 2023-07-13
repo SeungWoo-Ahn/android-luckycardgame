@@ -50,11 +50,16 @@ object GameManager {
     fun checkGameNeedEnd(
         cardNumber : Int,
         matchPool : MutableList<Int>,
-        onlyCheck : Boolean
+        onlyTrue : Boolean
     ) : Boolean {
-        if (cardNumber == 7) return true
-        val needEnd = matchPool.any { it + cardNumber == 7 || abs(it - cardNumber) == 7 }
-        if (!onlyCheck) matchPool.add(cardNumber)
+        var needEnd = false
+        if (cardNumber == 7) {
+            needEnd = true
+        }
+        if (cardNumber != 7) {
+            needEnd = matchPool.any { it + cardNumber == 7 || abs(it - cardNumber) == 7 }
+        }
+        if (!onlyTrue) matchPool.add(cardNumber)
         return needEnd
     }
 
@@ -68,27 +73,23 @@ object GameManager {
         selectPool.clear()
     }
 
-    fun findWinner() : List<Int> {
+    fun findWinner(matchPool: MutableList<Int>, playerList: MutableList<Player>) : List<Int> {
         val winNumbers = mutableListOf<Int>()
         for (matchNumber in matchPool) {
-            matchPool.remove(matchNumber)
-            if (checkGameNeedEnd(matchNumber, matchPool, true)) {
-                winNumbers.add(matchNumber)
-            }
-            matchPool.add(matchNumber)
+            if (checkGameNeedEnd(matchNumber, matchPool, true)) winNumbers.add(matchNumber)
         }
-        val winnerList = mutableListOf<Int>()
+        val winnerList = mutableSetOf<Int>()
         for (player in playerList) {
             for (matchNumber in player.matchList) {
                 if (winNumbers.contains(matchNumber)) winnerList.add(player.playerId)
             }
         }
-        return winnerList
+        return winnerList.toList()
     }
 
     fun setGameResult(playerQueue : LinkedList<Player>, matchPool: MutableList<Int>) {
         playerList.addAll(playerQueue)
-        matchPool.addAll(matchPool)
+        this.matchPool.addAll(matchPool)
     }
 
     fun resetGameResult() {

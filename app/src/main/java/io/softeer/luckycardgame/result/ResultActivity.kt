@@ -20,7 +20,7 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var bind : ActivityResultBinding
     private val playerList = GameManager.playerList
-    private val winnerList = GameManager.findWinner()
+    private val winnerList = listOf<Int>()
     private val winnerName = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -10,25 +10,25 @@ class Game_CheckEndTest{
 
     @Test
     fun checkEndTest_findSeven_returnTrue() {
-        val actual = GameManager.checkGameNeedEnd(7, resultList)
+        val actual = GameManager.checkGameNeedEnd(7, resultList, false)
         assertTrue(actual)
     }
 
     @Test
     fun checkEndTest_sumIsSeven_returnTrue() {
-        val actual = GameManager.checkGameNeedEnd(6, resultList)
+        val actual = GameManager.checkGameNeedEnd(6, resultList, false)
         assertTrue(actual)
     }
 
     @Test
     fun checkEndTest_subtractIsSeven_returnTrue() {
-        val actual = GameManager.checkGameNeedEnd(2, resultList)
+        val actual = GameManager.checkGameNeedEnd(2, resultList, false)
         assertTrue(actual)
     }
 
     @Test
     fun checkEndTest_findNothing_returnFalse() {
-        val actual = GameManager.checkGameNeedEnd(12, resultList)
+        val actual = GameManager.checkGameNeedEnd(12, resultList, false)
         assertFalse(actual)
     }
 
