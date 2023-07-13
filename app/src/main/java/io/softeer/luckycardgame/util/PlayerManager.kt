@@ -7,12 +7,16 @@ object PlayerManager {
     fun providePlayerForGame(
         playerNumber: Int,
         gameDeck: MutableList<Card>,
+        matchPool : MutableList<Int>,
+        endGame : () -> Unit
     ) : MutableList<Player> {
         val playerList = mutableListOf<Player>()
         for (index in 0 until  playerNumber) {
             val player = makePlayer(gameDeck, index, playerNumber)
             sortPlayerCards(player)
+            val removeList = player.removeSameNumbers()
             player.showPlayerCardsInfo()
+            if (checkPlayerCardsBeforeGame(removeList, matchPool)) endGame()
             playerList.add(player)
         }
         return playerList
@@ -28,7 +32,11 @@ object PlayerManager {
         return player.cardList
     }
 
-    fun removePlayerSameNumbers(player : Player) : List<Card> {
-        return player.removeSameNumbers()
+    private fun checkPlayerCardsBeforeGame(removeList: List<Int>, matchList: MutableList<Int>) : Boolean {
+        for (matchNumber in removeList) {
+            return GameManager.checkGameNeedEnd(matchNumber, matchList)
+        }
+        return false
     }
+
 }

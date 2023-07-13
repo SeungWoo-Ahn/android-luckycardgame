@@ -1,16 +1,19 @@
 package io.softeer.luckycardgame.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.HolderCardBinding
+import kotlinx.coroutines.CoroutineScope
 
 class CardAdapter(
     private val cardList: MutableList<Card>,
     private val showFront : Boolean,
-    private val onCardClick : ()->Unit
+    private val onCardClick : (Card, Int)->Unit,
+    private val adapterId : Int
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     private var ableMinIndex = 0
@@ -41,9 +44,19 @@ class CardAdapter(
             bind.root.setOnClickListener {
                 updateAbleIndex(adapterPosition) {
                     flipCard(bind)
+                    onCardClick(card, adapterId)
                 }
             }
         }
+    }
+
+    fun updateAdapter(selectedCards : MutableList<Card>) {
+        cardList.removeAll(selectedCards)
+        notifyDataSetChanged()
+        ableMinIndex = 0
+        ableMaxIndex = itemCount - 1
+        selectedPosition.clear()
+        Log.i(javaClass.name, "업데이트")
     }
 
     private fun updateAbleIndex(position : Int, selectItem : ()->Unit) {

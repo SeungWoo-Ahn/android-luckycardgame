@@ -1,5 +1,6 @@
 package io.softeer.luckycardgame.game
 
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +11,10 @@ import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
 import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
+import io.softeer.luckycardgame.util.GameManager
 import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
 import io.softeer.luckycardgame.util.ViewUtil
+import java.util.LinkedList
 
 class LuckyGame(
     private val bind : ActivityMainBinding
@@ -22,6 +25,10 @@ class LuckyGame(
     private val recyclerViewList : List<RecyclerView> =
         listOf(bind.rvA, bind.rvB, bind.rvC, bind.rvD, bind.rvE)
     private val bottomCards = mutableListOf<Card>()
+    private val adapterList = mutableListOf<CardAdapter>()
+    private val selectPool = mutableMapOf<Int,MutableList<Card>>()
+    private val matchPool = mutableListOf<Int>()
+    private var playerQueue = LinkedList<Player>()
 
     /*************************************************
      *** 화면 제어
@@ -68,13 +75,15 @@ class LuckyGame(
 
     private fun connectAdapter(playerNumber: Int) {
         for ((index, player) in playerList.withIndex()) {
+            val adapter = CardAdapter(player.cardList,player.me,::selectCard, index)
             ViewUtil.setRecycler(
                 recyclerViewList[index],
                 layoutManager = LinearLayoutManager(bind.root.context, RecyclerView.HORIZONTAL, false),
                 rightSpace = ViewUtil.setItemSpace(playerNumber),
                 topSpace = 0,
-                CardAdapter(player.cardList,player.me,::selectCard)
+                adapter
             )
+            adapterList.add(adapter)
         }
         connectBottomAdapter(playerNumber)
     }
@@ -83,7 +92,7 @@ class LuckyGame(
         val cardCount = 11 - playerNumber
         val bottomCardList = gameDeck.slice(playerNumber*cardCount until  gameDeck.size).toMutableList()
         bottomCardList.sort()
-        val adapter = CardAdapter(bottomCardList, false, ::selectCard)
+        val adapter = CardAdapter(bottomCardList, false, ::selectCard, playerNumber)
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
                 bind.rvBottom,
@@ -109,6 +118,7 @@ class LuckyGame(
                 adapter
             )
         }
+        adapterList.add(adapter)
     }
 
     /*************************************************
@@ -119,16 +129,35 @@ class LuckyGame(
         gameDeck.clear()
         playerList.clear()
         bottomCards.clear()
+        adapterList.clear()
+        selectPool.clear()
+        matchPool.clear()
+        playerQueue.clear()
     }
 
     private fun play(playerNumber : Int) {
         initGame()
         gameDeck.addAll(provideDeckForGame(playerNumber))
-        playerList.addAll(providePlayerForGame(playerNumber, gameDeck))
+        playerList.addAll(providePlayerForGame(playerNumber, gameDeck, matchPool, ::endGame))
         connectAdapter(playerNumber)
+        playerQueue = LinkedList(playerList)
     }
 
-    private fun selectCard() {
+    private fun selectCard(card: Card, adapterId : Int) {
+        val playerCardMatch = GameManager.selectCardByPlayer(
+            playerQueue,
+            card,
+            adapterId,
+            selectPool,
+            matchPool,
+            ::endGame
+        )
+        if (playerCardMatch) {
+            GameManager.updateGameUI(selectPool, adapterList)
+        }
+    }
 
+    private fun endGame() {
+        Log.i(javaClass.name, "게임 종료")
     }
 }
