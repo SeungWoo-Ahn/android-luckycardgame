@@ -10,6 +10,7 @@ import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.databinding.ActivityMainBinding
 import io.softeer.luckycardgame.player.Player
+import io.softeer.luckycardgame.util.CardManager
 import io.softeer.luckycardgame.util.CardManager.provideDeckForGame
 import io.softeer.luckycardgame.util.GameManager
 import io.softeer.luckycardgame.util.PlayerManager.providePlayerForGame
@@ -17,7 +18,8 @@ import io.softeer.luckycardgame.util.ViewUtil
 import java.util.LinkedList
 
 class LuckyGame(
-    private val bind : ActivityMainBinding
+    private val bind : ActivityMainBinding,
+    private val moveResult : () -> Unit
 ) : MaterialButtonToggleGroup.OnButtonCheckedListener {
 
     private val gameDeck = mutableListOf<Card>()
@@ -92,6 +94,7 @@ class LuckyGame(
         val cardCount = 11 - playerNumber
         val bottomCardList = gameDeck.slice(playerNumber*cardCount until  gameDeck.size).toMutableList()
         bottomCardList.sort()
+        CardManager.showAllCardInfo(bottomCardList, null)
         val adapter = CardAdapter(bottomCardList, false, ::selectCard, playerNumber)
         when(playerNumber) {
             3 -> ViewUtil.setRecycler(
@@ -135,7 +138,7 @@ class LuckyGame(
         playerQueue.clear()
     }
 
-    private fun play(playerNumber : Int) {
+    fun play(playerNumber : Int) {
         initGame()
         gameDeck.addAll(provideDeckForGame(playerNumber))
         playerList.addAll(providePlayerForGame(playerNumber, gameDeck, matchPool, ::endGame))
@@ -158,6 +161,7 @@ class LuckyGame(
     }
 
     private fun endGame() {
-        Log.i(javaClass.name, "게임 종료")
+        GameManager.setGameResult(playerQueue, matchPool)
+        moveResult()
     }
 }

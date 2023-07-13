@@ -3,13 +3,14 @@ package io.softeer.luckycardgame.util
 import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.player.Player
+import java.util.LinkedList
 import java.util.Queue
 import kotlin.math.abs
 
 object GameManager {
 
     val playerList = mutableListOf<Player>()
-    val matchPool = mutableListOf<Int>()
+    private val matchPool = mutableListOf<Int>()
 
     fun selectCardByPlayer(
         playerQueue : Queue<Player>,
@@ -51,12 +52,9 @@ object GameManager {
         matchPool : MutableList<Int>,
         onlyCheck : Boolean
     ) : Boolean {
-        if (cardNumber == 7) {
-            matchPool.add(7)
-            return true
-        }
+        if (cardNumber == 7) return true
         val needEnd = matchPool.any { it + cardNumber == 7 || abs(it - cardNumber) == 7 }
-        if (onlyCheck) matchPool.add(cardNumber)
+        if (!onlyCheck) matchPool.add(cardNumber)
         return needEnd
     }
 
@@ -88,8 +86,9 @@ object GameManager {
         return winnerList
     }
 
-    fun setGameResult(playerList : MutableList<Player>) {
-        playerList.addAll(playerList)
+    fun setGameResult(playerQueue : LinkedList<Player>, matchPool: MutableList<Int>) {
+        playerList.addAll(playerQueue)
+        matchPool.addAll(matchPool)
     }
 
     fun resetGameResult() {

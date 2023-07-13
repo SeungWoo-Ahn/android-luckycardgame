@@ -53,7 +53,8 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
     private fun connectAdapter() {
         val recyclerViewList = listOf(bind.rvOne, bind.rvTwo, bind.rvThree, bind.rvFour, bind.rvFive)
         for ((index, player) in playerList.withIndex()) {
-            val adapter = CardAdapter(makeWinCard(player),true, null, index)
+            val winCards = makeWinCard(player)
+            val adapter = CardAdapter(winCards,true, null, index)
             ViewUtil.setRecycler(
                 recyclerViewList[index],
                 layoutManager = LinearLayoutManager(bind.root.context, RecyclerView.HORIZONTAL, false),
@@ -93,5 +94,8 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
 
     override fun onClick(p0: View?) {
         GameManager.resetGameResult()
+        intent.putExtra("number", playerList.size)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }
