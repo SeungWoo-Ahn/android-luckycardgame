@@ -10,7 +10,7 @@ class Player(
     val playerId : Int,
 ) {
     val me = playerId == 0
-    val matchList = mutableSetOf<Int>()
+    val matchSet = mutableSetOf<Int>()
     private val selectCards = mutableListOf<Card>()
     fun showPlayerCardsInfo() = CardManager.showAllCardInfo(cardList, playerId)
 
@@ -28,7 +28,7 @@ class Player(
         if (selectCards.size == 3) {
             val isMatch = GameManager.checkSelectedCardsSame(selectCards)
             if (isMatch) {
-                matchList.add(selectCards[0].getCardNumber())
+                matchSet.add(selectCards[0].getCardNumber())
             }
             return isMatch
         }
@@ -50,11 +50,11 @@ class Player(
             val number = card.getCardNumber()
             if (counts[number] == 3) {
                 result.add(card)
-                matchList.add(number)
+                matchSet.add(number)
             }
         }
         cardList.removeAll(result)
-        return matchList.toList()
+        return matchSet.toList()
     }
 
     private fun sayMyTurn() {

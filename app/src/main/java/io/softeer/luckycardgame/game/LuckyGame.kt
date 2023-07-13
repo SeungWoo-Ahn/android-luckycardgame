@@ -48,33 +48,21 @@ class LuckyGame(
         isChecked: Boolean
     ) {
         when(group?.checkedButtonId) {
-            R.id.button1 -> ViewUtil.changeBoardView(
-                bind.groupBoardD,
-                bind.groupBoardE,
-                bind.tvBoardBottom,
-                bind.rvBottom,
-                3,
-                ::play
-            )
-
-            R.id.button2 -> ViewUtil.changeBoardView(
-                bind.groupBoardD,
-                bind.groupBoardE,
-                bind.tvBoardBottom,
-                bind.rvBottom,
-                4,
-                ::play
-            )
-
-            R.id.button3 -> ViewUtil.changeBoardView(
-                bind.groupBoardD,
-                bind.groupBoardE,
-                bind.tvBoardBottom,
-                bind.rvBottom,
-                5,
-                ::play
-            )
+            R.id.button1 -> startGame(3)
+            R.id.button2 -> startGame(4)
+            R.id.button3 -> startGame(5)
         }
+    }
+
+    fun startGame(playerNumber: Int) {
+        ViewUtil.changeBoardView(
+            bind.groupBoardD,
+            bind.groupBoardE,
+            bind.tvBoardBottom,
+            bind.rvBottom,
+            playerNumber,
+            ::play
+        )
     }
 
     private fun connectAdapter(playerNumber: Int) {
@@ -140,7 +128,7 @@ class LuckyGame(
         playerQueue.clear()
     }
 
-    fun play(playerNumber : Int) {
+    private fun play(playerNumber : Int) {
         initGame()
         gameDeck.addAll(provideDeckForGame(playerNumber))
         playerList.addAll(providePlayerForGame(playerNumber, gameDeck))

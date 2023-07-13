@@ -67,7 +67,7 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
 
     private fun makeWinCard(player: Player) : MutableList<Card> {
         val winCards = mutableListOf<Card>()
-        for (number in player.matchList) {
+        for (number in player.matchSet) {
             for (type in CardType.values()) {
                 winCards.add(Card(number, type))
             }
@@ -94,9 +94,9 @@ class ResultActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun onClick(p0: View?) {
-        GameManager.resetGameResult()
         intent.putExtra("number", playerList.size)
         setResult(RESULT_OK, intent)
+        GameManager.resetGameResult()
         finish()
     }
 }

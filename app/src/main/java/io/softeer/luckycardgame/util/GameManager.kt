@@ -1,5 +1,6 @@
 package io.softeer.luckycardgame.util
 
+import android.util.Log
 import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.player.Player
@@ -74,14 +75,18 @@ object GameManager {
     }
 
     fun findWinner() : List<Int> {
-        val winNumbers = mutableListOf<Int>()
+        val winNumbers = mutableSetOf<Int>()
         for (matchNumber in matchPool) {
-            if (checkGameNeedEnd(matchNumber, matchPool, true)) winNumbers.add(matchNumber)
+            if (checkGameNeedEnd(matchNumber, matchPool, true)){
+                winNumbers.add(matchNumber)
+            }
         }
         val winnerList = mutableSetOf<Int>()
         for (player in playerList) {
-            for (matchNumber in player.matchList) {
-                if (winNumbers.contains(matchNumber)) winnerList.add(player.playerId)
+            for (matchNumber in player.matchSet) {
+                if (winNumbers.contains(matchNumber)) {
+                    winnerList.add(player.playerId)
+                }
             }
         }
         return winnerList.toList()
@@ -89,6 +94,7 @@ object GameManager {
 
     fun setGameResult(playerQueue : LinkedList<Player>, matchPool: MutableList<Int>) {
         playerList.addAll(playerQueue)
+        playerList.sortBy { it.playerId }
         this.matchPool.addAll(matchPool)
     }
 

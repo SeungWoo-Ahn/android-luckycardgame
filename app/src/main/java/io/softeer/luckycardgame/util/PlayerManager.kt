@@ -33,7 +33,7 @@ object PlayerManager {
     fun checkPlayerListNeedEnd(playerList: MutableList<Player>, matchPool: MutableList<Int>) : Boolean {
         var needEnd = false
         for (player in playerList) {
-            val matchListByPlayer = player.matchList.toMutableList()
+            val matchListByPlayer = player.matchSet
             if (checkPlayerCardsBeforeGame(matchListByPlayer, matchPool)) {
                 needEnd = true
             }
@@ -41,11 +41,14 @@ object PlayerManager {
         return needEnd
     }
 
-    private fun checkPlayerCardsBeforeGame(removeList: List<Int>, matchPool: MutableList<Int>) : Boolean {
+    private fun checkPlayerCardsBeforeGame(removeList: MutableSet<Int>, matchPool: MutableList<Int>) : Boolean {
+        var needEnd = false
         for (matchNumber in removeList) {
-            return GameManager.checkGameNeedEnd(matchNumber, matchPool, false)
+            if (GameManager.checkGameNeedEnd(matchNumber, matchPool, false)) {
+                needEnd = true
+            }
         }
-        return false
+        return needEnd
     }
 
 }
