@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 class CardAdapter(
     private val cardList: MutableList<Card>,
     private val showFront : Boolean,
-    private val onCardClick : (Card, Int)->Unit,
+    private val onCardClick : ((Card, Int)->Unit)?,
     private val adapterId : Int
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
@@ -44,7 +44,7 @@ class CardAdapter(
             bind.root.setOnClickListener {
                 updateAbleIndex(adapterPosition) {
                     flipCard(bind)
-                    onCardClick(card, adapterId)
+                    onCardClick?.invoke(card, adapterId)
                 }
             }
         }

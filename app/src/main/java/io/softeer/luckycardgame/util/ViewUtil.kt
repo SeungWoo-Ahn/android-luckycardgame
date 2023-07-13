@@ -17,32 +17,32 @@ object ViewUtil {
     fun changeBoardView(
         dGroup: Group,
         eGroup: Group,
-        bottomBoard: TextView,
-        bottomRecyclerView: RecyclerView,
+        bottomBoard: TextView?,
+        bottomRecyclerView: RecyclerView?,
         playerNumber: Int,
-        play: (Int) -> Unit
+        play: ((Int) -> Unit)?
     ) {
         when(playerNumber) {
             3 -> {
                 dGroup.visibility = View.GONE
                 eGroup.visibility = View.GONE
-                bottomRecyclerView.setHeight(240f)
-                bottomBoard.setHeight(240f)
+                bottomRecyclerView?.setHeight(240f)
+                bottomBoard?.setHeight(240f)
             }
             4 -> {
                 dGroup.visibility = View.VISIBLE
                 eGroup.visibility = View.GONE
-                bottomRecyclerView.setHeight(240f)
-                bottomBoard.setHeight(240f)
+                bottomRecyclerView?.setHeight(240f)
+                bottomBoard?.setHeight(240f)
             }
             5 -> {
                 dGroup.visibility = View.VISIBLE
                 eGroup.visibility = View.VISIBLE
-                bottomRecyclerView.setHeight(120f)
-                bottomBoard.setHeight(120f)
+                bottomRecyclerView?.setHeight(120f)
+                bottomBoard?.setHeight(120f)
             }
         }
-        play(playerNumber)
+        play?.let { it(playerNumber) }
     }
 
     /**

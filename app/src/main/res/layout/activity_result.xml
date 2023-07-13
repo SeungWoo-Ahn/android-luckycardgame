@@ -160,6 +160,7 @@
         app:layout_constraintEnd_toEndOf="@id/tv_board_five"/>
 
     <TextView
+        android:id="@+id/tv_winner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -171,8 +172,8 @@
         app:layout_constraintTop_toBottomOf="@id/tv_board_five"
         tools:text="이번 게임은 A와 B가 승리했습니다"/>
 
-
     <TextView
+        android:id="@+id/btn_restart"
         android:layout_width="match_parent"
         android:layout_height="@dimen/result_button_height"
         android:background="@color/purple_500"
@@ -182,5 +183,17 @@
         android:textStyle="bold"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_four"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_board_four,rv_four"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_five"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_board_five,rv_five"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

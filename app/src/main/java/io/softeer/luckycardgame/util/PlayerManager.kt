@@ -34,7 +34,7 @@ object PlayerManager {
 
     private fun checkPlayerCardsBeforeGame(removeList: List<Int>, matchList: MutableList<Int>) : Boolean {
         for (matchNumber in removeList) {
-            return GameManager.checkGameNeedEnd(matchNumber, matchList)
+            return GameManager.checkGameNeedEnd(matchNumber, matchList, false)
         }
         return false
     }

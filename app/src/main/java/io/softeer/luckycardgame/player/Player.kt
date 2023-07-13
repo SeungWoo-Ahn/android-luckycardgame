@@ -7,10 +7,10 @@ import io.softeer.luckycardgame.util.GameManager
 
 class Player(
     val cardList: MutableList<Card>,
-    private val playerId : Int,
+    val playerId : Int,
 ) {
     val me = playerId == 0
-    var matchList = mutableListOf<Int>()
+    val matchList = mutableListOf<Int>()
     private val selectCards = mutableListOf<Card>()
     fun showPlayerCardsInfo() = CardManager.showAllCardInfo(cardList, playerId)
 

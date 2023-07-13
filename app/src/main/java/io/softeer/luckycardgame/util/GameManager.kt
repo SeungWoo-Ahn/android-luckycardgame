@@ -8,6 +8,9 @@ import kotlin.math.abs
 
 object GameManager {
 
+    val playerList = mutableListOf<Player>()
+    val matchPool = mutableListOf<Int>()
+
     fun selectCardByPlayer(
         playerQueue : Queue<Player>,
         card : Card,
@@ -22,7 +25,7 @@ object GameManager {
         }
         val playerCardMatch = currentPlayer.selectCard(card)
         updateSelectPool(card, adapterId, selectPool)
-        if (playerCardMatch && checkGameNeedEnd(card.getCardNumber(), matchPool)) {
+        if (playerCardMatch && checkGameNeedEnd(card.getCardNumber(), matchPool, false)) {
             endGame()
         }
         return playerCardMatch
@@ -44,12 +47,16 @@ object GameManager {
     }
 
     fun checkGameNeedEnd(
-        cardNumber: Int,
-        matchPool: MutableList<Int>
+        cardNumber : Int,
+        matchPool : MutableList<Int>,
+        onlyCheck : Boolean
     ) : Boolean {
-        if (cardNumber == 7) return true
+        if (cardNumber == 7) {
+            matchPool.add(7)
+            return true
+        }
         val needEnd = matchPool.any { it + cardNumber == 7 || abs(it - cardNumber) == 7 }
-        matchPool.add(cardNumber)
+        if (onlyCheck) matchPool.add(cardNumber)
         return needEnd
     }
 
@@ -61,5 +68,32 @@ object GameManager {
             adapterList[id].updateAdapter(selectList)
         }
         selectPool.clear()
+    }
+
+    fun findWinner() : List<Int> {
+        val winNumbers = mutableListOf<Int>()
+        for (matchNumber in matchPool) {
+            matchPool.remove(matchNumber)
+            if (checkGameNeedEnd(matchNumber, matchPool, true)) {
+                winNumbers.add(matchNumber)
+            }
+            matchPool.add(matchNumber)
+        }
+        val winnerList = mutableListOf<Int>()
+        for (player in playerList) {
+            for (matchNumber in player.matchList) {
+                if (winNumbers.contains(matchNumber)) winnerList.add(player.playerId)
+            }
+        }
+        return winnerList
+    }
+
+    fun setGameResult(playerList : MutableList<Player>) {
+        playerList.addAll(playerList)
+    }
+
+    fun resetGameResult() {
+        playerList.clear()
+        matchPool.clear()
     }
 }
