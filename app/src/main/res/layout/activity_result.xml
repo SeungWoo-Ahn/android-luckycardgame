@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".result.ResultActivity">
+
+    <TextView
+        android:id="@+id/tv_result_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/result_title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/result_title_size"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="@dimen/app_padding"
+        android:layout_marginTop="@dimen/app_padding"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_board_one"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:background="@drawable/tv_board_gray"
+        android:layout_marginTop="@dimen/result_board_space"
+        android:text="@string/card_a"
+        android:textColor="@color/gray_50"
+        android:textSize="@dimen/board_text_size"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_result_title"
+        app:layout_constraintEnd_toEndOf="@id/tv_result_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_result_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_one"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/board_padding_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="@id/tv_board_one"
+        app:layout_constraintStart_toStartOf="@id/tv_board_one"
+        app:layout_constraintEnd_toEndOf="@id/tv_board_one"/>
+
+    <TextView
+        android:id="@+id/tv_board_two"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:background="@drawable/tv_board_gray"
+        android:layout_marginTop="@dimen/result_board_space"
+        android:text="@string/card_b"
+        android:textColor="@color/gray_50"
+        android:textSize="@dimen/board_text_size"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_result_title"
+        app:layout_constraintEnd_toEndOf="@id/tv_result_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_board_one"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_two"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/board_padding_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="@id/tv_board_two"
+        app:layout_constraintStart_toStartOf="@id/tv_board_two"
+        app:layout_constraintEnd_toEndOf="@id/tv_board_two"/>
+
+    <TextView
+        android:id="@+id/tv_board_three"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:background="@drawable/tv_board_gray"
+        android:layout_marginTop="@dimen/result_board_space"
+        android:text="@string/card_c"
+        android:textColor="@color/gray_50"
+        android:textSize="@dimen/board_text_size"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_result_title"
+        app:layout_constraintEnd_toEndOf="@id/tv_result_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_board_two"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_three"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/board_padding_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="@id/tv_board_three"
+        app:layout_constraintStart_toStartOf="@id/tv_board_three"
+        app:layout_constraintEnd_toEndOf="@id/tv_board_three"/>
+
+    <TextView
+        android:id="@+id/tv_board_four"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:background="@drawable/tv_board_gray"
+        android:layout_marginTop="@dimen/result_board_space"
+        android:text="@string/card_d"
+        android:textColor="@color/gray_50"
+        android:textSize="@dimen/board_text_size"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_result_title"
+        app:layout_constraintEnd_toEndOf="@id/tv_result_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_board_three"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_four"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/board_padding_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="@id/tv_board_four"
+        app:layout_constraintStart_toStartOf="@id/tv_board_four"
+        app:layout_constraintEnd_toEndOf="@id/tv_board_four"/>
+
+    <TextView
+        android:id="@+id/tv_board_five"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:background="@drawable/tv_board_gray"
+        android:layout_marginTop="@dimen/result_board_space"
+        android:text="@string/card_e"
+        android:textColor="@color/gray_50"
+        android:textSize="@dimen/board_text_size"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_result_title"
+        app:layout_constraintEnd_toEndOf="@id/tv_result_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_board_four"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_five"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/board_height"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/board_padding_vertical"
+        android:paddingHorizontal="@dimen/board_padding_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="@id/tv_board_five"
+        app:layout_constraintStart_toStartOf="@id/tv_board_five"
+        app:layout_constraintEnd_toEndOf="@id/tv_board_five"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/result_board_space"
+        app:layout_constraintStart_toStartOf="@id/tv_result_title"
+        app:layout_constraintEnd_toEndOf="@id/tv_result_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_board_five"
+        tools:text="이번 게임은 A와 B가 승리했습니다"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/result_button_height"
+        android:background="@color/purple_500"
+        android:text="@string/result_restart"
+        android:textColor="@color/white"
+        android:textSize="@dimen/result_button_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

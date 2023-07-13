@@ -11,5 +11,8 @@
     <string name="card_d">D</string>
     <string name="card_e">E</string>
 
+    <string name="result_title">경기 결과</string>
+    <string name="result_restart">재시작</string>
+
     <string name="image_card_back">For card backside</string>
 </resources>
