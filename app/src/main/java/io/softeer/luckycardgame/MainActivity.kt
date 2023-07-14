@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
      */
     private var cardList = mutableListOf<Card>()
     private lateinit var bind : ActivityMainBinding
-    private lateinit var recyclerViewList : List<RecyclerView>
-    private lateinit var playerList : MutableList<Player>
+    private val recyclerViewList = mutableListOf<RecyclerView>()
+    private val playerList = mutableListOf<Player>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -256,7 +256,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="tv_board_e,rv_e"/>
-
+=n
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v_start"
             android:layout_width="wrap_content"

@@ -5,7 +5,7 @@ import io.softeer.luckycardgame.adapter.CardAdapter
 import io.softeer.luckycardgame.card.Card
 import io.softeer.luckycardgame.util.CardManager
 
-class Player constructor(
+class Player(
     deck: MutableList<Card>,
     playerIndex : Int,
     cardCount : Int
@@ -22,5 +22,4 @@ class Player constructor(
         CardManager.checkCardsNumberSame(cardList)
         return CardAdapter(cardList, isMine)
     }
-
 }
